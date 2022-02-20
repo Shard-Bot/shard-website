@@ -1,0 +1,111 @@
+{
+	"main": {
+		"index": {
+			"pageTitle": "Shard Bot",
+			"pageDescription": "Shard Bot is a Discord bot that allows you to manage your Discord server.",
+
+			"navbar": {
+				"invite": "Invite",
+				"support": "Support",
+				"login": "Login",
+
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			},
+
+			"features": {
+				"title": "Shard offers you:",
+				"dashboard": "Manage Shard from a dashboard.",
+				"antinuke": "Prevent the destruction of your server.",
+				"antiraid": "Prevent raiders and malicious users from attacking your server.",
+				"automodreation": "Moderate your server automatically.",
+				"more": "And more features!"
+			}
+		},
+		"servers": {
+			"pageTitle": "Shard Bot | Servers",
+			"pageDescription": "Log in to access the dashboard.",
+
+			"manage": "⚙ Manage Server",
+			"invite": "🔗 Invite Bot",
+
+			"noServer": "Don't see your server? & and log in again",
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			}
+		}
+	},
+	"dashboard": {
+		"index": {
+			"pageTitle": "Shard Bot | Dashboard",
+			"pageDescription": "Manage Shard Bot from this panel.",
+			"title": "Dashboard",
+
+			"configTitles": {
+				"title": "Categories",
+				"general": "General",
+				"antinuker": "Anti-Nuker",
+				"lockdown": "Lockdown",
+				"automod": "Auto-Mod",
+				"antispam": "Anti-Spam"
+			},
+
+			"serverInfo": {
+				"name": "Name",
+				"id": "ID",
+				"memberCount": "Member Count",
+				"channelCount": "Channel Count",
+				"roleCount": "Role Count"
+			},
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			}
+		},
+		"general": {
+			"pageTitle": "Shard Bot | General Settings",
+			"pageDescription": "Manage Shard Bot from this panel.",
+
+			"title": "General",
+			"back": "Back",
+			"select": "Select...",
+
+			"prefix": "Prefix",
+			"channels": {
+				"join": "Join Log Channels",
+				"exit": "Exit Log Channels",
+				"mod": "Mod Log Channels"
+			},
+			"roles": {
+				"muted": "Muted Role"
+			},
+			"users": {
+				"trusted": "Trusted Users"
+			},
+
+			"notFound": "Not Found",
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			},
+
+			"saveFooter": {
+				"content": "Careful, you have unsaved changes.",
+				"save": "Save",
+				"reset": "Reset"
+			}
+		}
+	}
+}
