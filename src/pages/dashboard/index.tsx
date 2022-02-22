@@ -10,7 +10,7 @@ import Navbar from '../../components/navbar';
 import styles from '../../assets/styles/dashboard/servers.module.scss';
 
 import type { NextPage, GetServerSideProps } from 'next';
-import { ServerData } from 'typings';
+import { ServerData } from '../../typings';
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	if (!context.req.user || !context.req.user.id)

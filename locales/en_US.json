@@ -22,6 +22,20 @@
 				"antiraid": "Prevent raiders and malicious users from attacking your server.",
 				"automodreation": "Moderate your server automatically.",
 				"more": "And more features!"
+			},
+
+			"showcase": {
+				"automodTitle": "Auto Moderation",
+				"automodDescription": "Shard automatically moderates your server with efficiency.",
+
+				"moderationTitle": "Moderation Commands",
+				"moderationDescription": "Shard haves a variety of moderation commands to help you moderate your server.",
+
+				"utilitiesTitle": "Utilities",
+				"utilitiesDescription": "And also a variety of utilities to help you manage your server.",
+
+				"loggingTitle": "Logging",
+				"loggingDescription": "Be aware of what's happening on your server with Shard's logging system."
 			}
 		},
 		"servers": {

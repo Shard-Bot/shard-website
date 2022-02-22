@@ -6,7 +6,7 @@ import Head from 'next/head';
 
 import { motion } from 'framer-motion';
 import { Col, Row, Container } from 'react-bootstrap';
-import Navbar from 'src/components/navbar';
+import Navbar from '../components/navbar';
 import Particles from 'react-tsparticles';
 
 import styles from '../assets/styles/index.module.scss';
@@ -37,7 +37,7 @@ const Index: NextPage = (props: any) => {
 
 			<Particles
 				style={{
-					zIndex: "100000000000 !important",
+					zIndex: '100000000000 !important',
 				}}
 				className={styles['particles']}
 				params={{
@@ -169,14 +169,14 @@ const Index: NextPage = (props: any) => {
 							/>
 						</Col>
 						<Col>
-							<h3>Automoderation</h3>
-							<p>With Shard you dont have to worry about people doing spam or sending sus messages</p>
+							<h3>{props.lang.showcase.automodTitle}</h3>
+							<p>{props.lang.showcase.automodDescription}</p>
 						</Col>
 					</Row>
 					<Row className={styles['showcase-card']}>
 						<Col>
-							<h3>Moderation Commands</h3>
-							<p>With Shard you dont have to worry about people doing spam or sending sus messages</p>
+							<h3>{props.lang.showcase.moderationTitle}</h3>
+							<p>{props.lang.showcase.moderationDescription}</p>
 						</Col>
 						<Col>
 							<img
@@ -195,18 +195,18 @@ const Index: NextPage = (props: any) => {
 							/>
 						</Col>
 						<Col>
-							<h3>Utility commands</h3>
-							<p>With Shard you dont have to worry about people doing spam or sending sus messages</p>
+							<h3>{props.lang.showcase.utilitiesTitle}</h3>
+							<p>{props.lang.showcase.utilitiesDescription}</p>
 						</Col>
 					</Row>
 					<Row className={styles['showcase-card']}>
 						<Col>
-							<h3>Logging</h3>
-							<p>With Shard you dont have to worry about people doing spam or sending sus messages</p>
+							<h3>{props.lang.showcase.loggingTitle}</h3>
+							<p>{props.lang.showcase.loggingDescription}</p>
 						</Col>
 						<Col>
 							<img
-								src='https://media.discordapp.net/attachments/945041023262924870/945042073323712563/unknown.png'
+								src='https://media.discordapp.net/attachments/945041498037182525/945114300136173618/unknown.png'
 								alt=''
 								width={600}
 							/>
@@ -214,8 +214,6 @@ const Index: NextPage = (props: any) => {
 					</Row>
 				</Container>
 			</main>
-
-			
 		</div>
 	);
 };
