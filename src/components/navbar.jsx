@@ -32,7 +32,7 @@ export default function Navbar(props) {
 							<Dropdown.Menu className={`container ${styles.dropdown}`} align='end'>
 								<Dropdown.Item href='/'>{props.lang.home}</Dropdown.Item>
 								<Dropdown.Item href='/guide'>{props.lang.guide}</Dropdown.Item>
-								<Dropdown.Item href='/servers'>{props.lang.servers}</Dropdown.Item>
+								<Dropdown.Item href='/dashboard'>{props.lang.servers}</Dropdown.Item>
 								<Dropdown.Divider />
 								<Dropdown.Item href='/api/auth/logout'>{props.lang.logout}</Dropdown.Item>
 							</Dropdown.Menu>

@@ -4,7 +4,7 @@ import discord from 'discord.js';
 import chalk from 'chalk';
 require('dotenv').config();
 
-const dev: boolean = false
+const dev: any = true
 const port: string | number = process.env.PORT || 3000;
 
 const nextApp = next({ dev });

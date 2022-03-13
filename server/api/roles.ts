@@ -49,4 +49,23 @@ router.post('/search', (req: express.Request, res: express.Response) => {
 	}
 });
 
+router.post('/info', (req: express.Request, res: express.Response) => {
+	if (!req.body.role || !req.body.server) return res.send('err-missing-params');
+	if (typeof req.body.role !== 'string' || typeof req.body.server !== 'string') return res.send('err-invalid-params');
+
+	try {
+		// @ts-ignore
+		let role: discord.Role = bot.guilds.cache.get(req.body.server)?.roles.cache.get(req.body.role);
+		if (role === undefined) return res.send('err-invalid-params');
+
+		return res.send({
+			id: role.id,
+			name: role.name,
+		});
+	} catch (err) {
+		reportError(err);
+		return res.send('err-internal-error');
+	}
+});
+
 export { router };

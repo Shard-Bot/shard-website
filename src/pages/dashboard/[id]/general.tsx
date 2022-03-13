@@ -25,13 +25,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 	const content = await axios({
 		method: 'get',
-		url: `${process.env.HOST_URL}/api/content/dashboard?page=general`,
+		url: `${process.env.HOST}/api/content/dashboard?page=general`,
 		headers: context.req.headers,
 	});
 
 	const server = await axios({
 		method: 'get',
-		url: `${process.env.HOST_URL}/api/servers/info`,
+		url: `${process.env.HOST}/api/servers/info`,
 		headers: context.req.headers,
 		data: {
 			user: context.req.user,
@@ -57,28 +57,39 @@ const DashboardGeneral: NextPage = (props: any) => {
 		users: {
 			values: [],
 			default: [],
-			isLoading: false,
+			isLoading: true,
 		},
 		roles: {
-			values: [],
-			default: [],
-			isLoading: false,
+			muted: {
+				values: [],
+				default: {} as any,
+				isLoading: true,
+			},
 		},
 		channels: {
-			join: {
+			JoinLog: {
 				values: [],
-				default: '',
-				isLoading: false,
+				default: {
+					label: '',
+					value: '',
+				},
+				isLoading: true,
 			},
-			exit: {
+			ExitLog: {
 				values: [],
-				default: '',
-				isLoading: false,
+				default: {
+					label: '',
+					value: '',
+				},
+				isLoading: true,
 			},
-			mod: {
+			ModLog: {
 				values: [],
-				default: '',
-				isLoading: false,
+				default: {
+					label: '',
+					value: '',
+				},
+				isLoading: true,
 			},
 		},
 	});
@@ -187,7 +198,10 @@ const DashboardGeneral: NextPage = (props: any) => {
 			...selectOptions,
 			roles: {
 				...selectOptions.roles,
-				isLoading: true,
+				muted: {
+					...selectOptions.roles.muted,
+					isLoading: true,
+				},
 			},
 		});
 
@@ -213,8 +227,12 @@ const DashboardGeneral: NextPage = (props: any) => {
 				...selectOptions,
 				roles: {
 					...selectOptions.roles,
-					values: values,
-					isLoading: false,
+					muted: {
+						...selectOptions.roles.muted,
+						// @ts-ignore
+						values: values,
+						isLoading: false,
+					},
 				},
 			});
 		}, 2000);
@@ -226,7 +244,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 			backgroundColor: '#1d2126',
 			color: '#fff',
 			border: 'none',
-			width: '60%',
+			width: '80%',
 		}),
 		option: (base: any, state: any) => ({
 			...base,
@@ -266,10 +284,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 			},
 			border: 'none',
 		}),
-
 		menu: (base: any, _state: any) => ({
 			...base,
-			width: '60%',
+			width: '80%',
 			backgroundColor: '#1a1e24',
 		}),
 	};
@@ -282,7 +299,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 			url: `/api/servers/save-changes`,
 			headers: {},
 			data: {
-				user: props.user.id,
+				user: props.user,
 				config: config,
 				server: props.server.info.id,
 			},
@@ -291,25 +308,93 @@ const DashboardGeneral: NextPage = (props: any) => {
 		console.log(response.data);
 	};
 
-	window.onload = async () => {
-		const trustedResult = await axios({
-			method: 'post',
-			url: `/api/users/getInfo`,
-			headers: {},
-			data: {
-				users: props.server.config.Users.Trusted,
-				server: props.server.info.id,
-			},
-		});
+	useEffect(() => {
+		window.onload = async () => {
+			const trustedResult = await axios({
+				method: 'post',
+				url: `/api/users/getInfo`,
+				headers: {},
+				data: {
+					users: props.server.config.Users.Trusted,
+					server: props.server.info.id,
+				},
+			});
 
-		setSelectOptions({
-			...selectOptions,
-			users: {
-				...selectOptions.users,
-				default: trustedResult.data,
-			},
-		});
-	};
+			const mutedResult = await axios({
+				method: 'post',
+				url: `/api/roles/info`,
+				headers: {},
+				data: {
+					role: props.server.config.Roles.MuteRol,
+					server: props.server.info.id,
+				},
+			});
+
+			const channelResult = await axios({
+				method: 'post',
+				url: `/api/channels/info`,
+				headers: {},
+				data: {
+					channels: [
+						{ id: props.server.config.Channels.ExitLog, key: 'ExitLog' },
+						{ id: props.server.config.Channels.JoinLog, key: 'JoinLog' },
+						{ id: props.server.config.Channels.ModLog, key: 'ModLog' },
+					],
+				},
+			});
+
+			setSelectOptions({
+				...selectOptions,
+				users: {
+					...selectOptions.users,
+					default: trustedResult.data.map((user) => {
+						return {
+							value: user.id,
+							label: `${user.username}#${user.discriminator}`,
+						};
+					}),
+					isLoading: false,
+				},
+				roles: {
+					muted: {
+						...selectOptions.roles.muted,
+						default: {
+							value: mutedResult.data.id,
+							label: mutedResult.data.name,
+						},
+						isLoading: false,
+					},
+				},
+				channels: {
+					...selectOptions.channels,
+					JoinLog: {
+						...selectOptions.channels.JoinLog,
+						default: {
+							value: channelResult.data.JoinLog.value,
+							label: `#${channelResult.data.JoinLog.label}`,
+						},
+						isLoading: false,
+					},
+					ExitLog: {
+						...selectOptions.channels.ExitLog,
+						default: {
+							value: channelResult.data.ExitLog.value,
+							label: `#${channelResult.data.ExitLog.label}`,
+						},
+						isLoading: false,
+					},
+					ModLog: {
+						...selectOptions.channels.ModLog,
+						default: {
+							value: channelResult.data.ModLog.value,
+							label: `#${channelResult.data.ModLog.label}`,
+						},
+						isLoading: false,
+					},
+				},
+			});
+		};
+	});
 
 	useEffect(() => {
 		const haveSameData = function (obj1: any, obj2: any) {
@@ -347,7 +432,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 				</Container>
 
 				<Container fluid={true}>
-					<Row>
+					<Row sm={1} xs={1} md={2}>
 						<Col>
 							<h2>{props.lang.prefix}</h2>
 							<input
@@ -387,7 +472,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 								isLoading={selectOptions.users.isLoading}
 								isMulti={true}
 								onInputChange={loadUsers}
-								defaultValue={selectOptions.users.default}
+								value={selectOptions.users.default}
 								styles={selectStyles}
 								placeholder={props.lang.select}
 							/>
@@ -399,8 +484,8 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<h2>{props.lang.roles.muted}</h2>
 							<Select
 								styles={selectStyles}
-								isLoading={selectOptions.roles.isLoading}
-								defaultValue={selectOptions.roles.default}
+								isLoading={selectOptions.roles.muted.isLoading}
+								value={selectOptions.roles.muted.default}
 								onInputChange={(e) => loadRoles(e)}
 								components={{
 									NoOptionsMessage: () => null,
@@ -417,16 +502,16 @@ const DashboardGeneral: NextPage = (props: any) => {
 									});
 								}}
 								placeholder={props.lang.select}
-								options={selectOptions.roles.values}
+								options={selectOptions.roles.muted.values}
 							/>
 						</Col>
-						<Col>
+						<Col className={styles['right-container']}>
 							<h2>{props.lang.channels.join}</h2>
 							<Select
 								styles={selectStyles}
-								isLoading={selectOptions.channels.join.isLoading}
-								defaultValue={selectOptions.channels.join.default}
-								onInputChange={(e) => loadChannels(e, 'join')}
+								isLoading={selectOptions.channels.JoinLog.isLoading}
+								value={selectOptions.channels.JoinLog.default}
+								onInputChange={(e) => loadChannels(e, 'JoinLog')}
 								components={{
 									NoOptionsMessage: () => null,
 									ClearIndicator: () => null,
@@ -436,12 +521,23 @@ const DashboardGeneral: NextPage = (props: any) => {
 										...config,
 										Channels: {
 											...config.Channels,
-											JoinLog: value,
+											JoinLog: value.value,
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											JoinLog: {
+												...selectOptions.channels.JoinLog,
+												default: value,
+											},
 										},
 									});
 								}}
 								placeholder={props.lang.select}
-								options={selectOptions.channels.join.values}
+								options={selectOptions.channels.JoinLog.values}
 							/>
 
 							<br />
@@ -451,9 +547,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<h2>{props.lang.channels.exit}</h2>
 							<Select
 								styles={selectStyles}
-								isLoading={selectOptions.channels.exit.isLoading}
-								defaultValue={selectOptions.channels.exit.default}
-								onInputChange={(e) => loadChannels(e, 'exit')}
+								isLoading={selectOptions.channels.ExitLog.isLoading}
+								value={selectOptions.channels.ExitLog.default}
+								onInputChange={(e) => loadChannels(e, 'ExitLog')}
 								components={{
 									NoOptionsMessage: () => null,
 									ClearIndicator: () => null,
@@ -461,14 +557,25 @@ const DashboardGeneral: NextPage = (props: any) => {
 								onChange={(value) => {
 									setConfig({
 										...config,
-										ExitLog: {
+										Channels: {
 											...config.Channels,
-											ExitLog: value,
+											ExitLog: value.value,
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											ExitLog: {
+												...selectOptions.channels.ExitLog,
+												default: value,
+											},
 										},
 									});
 								}}
 								placeholder={props.lang.select}
-								options={selectOptions.channels.exit.values}
+								options={selectOptions.channels.ExitLog.values}
 							/>
 
 							<br />
@@ -478,9 +585,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<h2>{props.lang.channels.mod}</h2>
 							<Select
 								styles={selectStyles}
-								isLoading={selectOptions.channels.mod.isLoading}
-								defaultValue={selectOptions.channels.mod.default}
-								onInputChange={(e) => loadChannels(e, 'mod')}
+								isLoading={selectOptions.channels.ModLog.isLoading}
+								value={selectOptions.channels.ModLog.default}
+								onInputChange={(e) => loadChannels(e, 'ModLog')}
 								components={{
 									NoOptionsMessage: () => null,
 									ClearIndicator: () => null,
@@ -488,14 +595,25 @@ const DashboardGeneral: NextPage = (props: any) => {
 								onChange={(value) => {
 									setConfig({
 										...config,
-										ModLog: {
+										Channels: {
 											...config.Channels,
-											ModLog: value,
+											ModLog: value.value,
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											ModLog: {
+												...selectOptions.channels.ModLog,
+												default: value,
+											},
 										},
 									});
 								}}
 								placeholder={props.lang.select}
-								options={selectOptions.channels.mod.values}
+								options={selectOptions.channels.ModLog.values}
 							/>
 						</Col>
 					</Row>

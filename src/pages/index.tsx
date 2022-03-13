@@ -212,6 +212,10 @@ const Index: NextPage = (props: any) => {
 							/>
 						</Col>
 					</Row>
+
+					<Container className={styles['footer']}>
+						<h1>jeowiq</h1>
+					</Container>
 				</Container>
 			</main>
 		</div>

@@ -1,6 +1,6 @@
 import express from 'express';
 import ms from 'ms';
-import discord from 'discord.js';
+import discord, { GuildChannel } from 'discord.js';
 
 import { reportError } from '../utils/error';
 import { bot } from '../index';
@@ -29,8 +29,10 @@ router.post(
 
 		try {
 			// @ts-ignore
-			let channels: Array<discord.GuildChannel> = bot.guilds.cache.get(req.body.servers)?.channels.cache;
+			let channels: Array<discord.GuildChannel> = bot.guilds.cache.get(req.body.server)?.channels.cache;
 			let results: Array<ChannelsSearchResult> = [];
+
+			if (!channels) return res.send('err-no-channels');
 
 			channels.forEach((channel: discord.GuildChannel) => {
 				if (channel.type === 'GUILD_TEXT' && channel.name.toLowerCase().includes(req.body.query.toLowerCase())) {
@@ -49,5 +51,35 @@ router.post(
 		}
 	}
 );
+
+router.post('/info', async (req, res) => {
+	if (!req.body.channels) return res.send('err-missing-params');
+	if (typeof req.body.channels !== 'object' || req.body.channels.length == 0) return res.send('err-invalid-params');
+
+	try {
+		let channelResult: any = {};
+
+		req.body.channels.forEach((object: any) => {
+			let channel: any = bot.channels.cache.get(object.id);
+
+			if (channel) {
+				return (channelResult[object.key] = {
+					label: channel.name,
+					value: channel.id,
+				});
+			}
+
+			return (channelResult[object.key] = {
+				label: '',
+				value: '',
+			});
+		});
+
+		return res.send(channelResult);
+	} catch (err) {
+		reportError(err);
+		return res.send('err-internal-error');
+	}
+});
 
 export { router };

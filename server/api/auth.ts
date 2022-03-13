@@ -20,13 +20,6 @@ router.use(
 		origin: process.env.HOST,
 	})
 );
-router.use(
-	rateLimit({
-		windowMs: ms('5h'),
-		max: 5,
-		message: 'err-rate-limit',
-	})
-);
 
 // Routes
 router.get('/login', async (req: express.Request, res: express.Response) => {
