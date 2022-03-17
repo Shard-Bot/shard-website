@@ -48,11 +48,13 @@ router.get('/list', (req: express.Request, res: express.Response) => {
 
 router.get('/info', async (req: express.Request, res: express.Response) => {
 	if (!req.body.server || !req.body.user) return res.send('err-missing-params');
-	if (typeof req.body.server !== 'string') return res.send('err-invalid-params');
+	if (typeof req.body.server !== 'string' || typeof req.body.user !== 'object') return res.send('err-invalid-params');
 
 	try {
 		let session = sessions.get(`${req.body.user.id}_${req.body.user.sessionID}`);
 		if (session == null) return res.send('err-session-expired');
+
+		console.log(session.servers);
 
 		let server = session.servers.find((server: discord.Guild) => server.id == req.body.server);
 		if (server == null) return res.send('err-server-not-found');

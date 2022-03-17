@@ -9,6 +9,7 @@ import SaveFooter from '../../../components/save-footer';
 import { Container, Col, Row } from 'react-bootstrap';
 import Head from 'next/head';
 import Select from 'react-select';
+import Particles from 'react-tsparticles';
 
 import styles from '../../../assets/styles/dashboard/general.module.scss';
 import { GetServerSideProps, NextPage } from 'next';
@@ -309,7 +310,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 	};
 
 	useEffect(() => {
-		window.onload = async () => {
+		const getInfo = async () => {
 			const trustedResult = await axios({
 				method: 'post',
 				url: `/api/users/getInfo`,
@@ -394,7 +395,10 @@ const DashboardGeneral: NextPage = (props: any) => {
 				},
 			});
 		};
-	});
+
+		getInfo();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		const haveSameData = function (obj1: any, obj2: any) {
@@ -414,10 +418,84 @@ const DashboardGeneral: NextPage = (props: any) => {
 
 	return (
 		<div className={styles['dashboard-general']}>
-			<Navbar usermenu='true' user={props.user} lang={props.lang.navbar} />
+			<Navbar user={props.user} lang={props.lang.navbar} />
 			<Head>
 				<title>{props.lang.pageTitle}</title>
 			</Head>
+
+			<Particles
+				className={styles['']}
+				params={{
+					particles: {
+						number: {
+							value: 10,
+							density: {
+								enable: true,
+								value_area: 800,
+							},
+						},
+						color: {
+							value: '#21252b',
+						},
+						shape: {
+							type: 'polygon',
+							stroke: {
+								width: 0,
+								color: '#000',
+							},
+							polygon: {
+								nb_sides: 6,
+							},
+							image: {
+								width: 100,
+								height: 100,
+							},
+						},
+						opacity: {
+							value: 0.4,
+							random: true,
+							anim: {
+								enable: false,
+								speed: 1,
+								opacity_min: 0.1,
+								sync: false,
+							},
+						},
+						size: {
+							value: 160,
+							random: true,
+							anim: {
+								enable: true,
+								speed: 10,
+								size_min: 40,
+								sync: false,
+							},
+						},
+						line_linked: {
+							enable: false,
+							distance: 200,
+							color: '#ffffff',
+							opacity: 1,
+							width: 2,
+						},
+						move: {
+							enable: true,
+							speed: 1,
+							direction: 'none',
+							random: false,
+							straight: false,
+							out_mode: 'out',
+							bounce: false,
+							attract: {
+								enable: false,
+								rotateX: 600,
+								rotateY: 1200,
+							},
+						},
+					},
+					retina_detect: true,
+				}}
+			/>
 
 			<main>
 				<Container fluid={true} className={styles['title']}>
@@ -492,6 +570,17 @@ const DashboardGeneral: NextPage = (props: any) => {
 									ClearIndicator: () => null,
 								}}
 								onChange={(value) => {
+									setSelectOptions({
+										...selectOptions,
+										roles: {
+											...selectOptions.roles,
+											muted: {
+												...selectOptions.roles.muted,
+												default: value,
+											},
+										},
+									});
+
 									setConfig({
 										...config,
 										Roles: {

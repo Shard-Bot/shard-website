@@ -27,6 +27,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		headers: context.req.headers as any,
 	});
 
+	console.log(data)
+
 	return {
 		props: {
 			lang: data.lang,
@@ -143,7 +145,7 @@ const Dashboard: NextPage = (props: any) => {
 					}}
 				/>
 
-				<Navbar usermenu='true' user={props.user} lang={props.lang.navbar} />
+				<Navbar  user={props.user} lang={props.lang.navbar} />
 				<div className='container w-100'>
 					<div className={`${styles['server-list']} row container-fluid`}>
 						{serverList}

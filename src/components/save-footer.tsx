@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './save-footer.module.scss';
 import { motion } from 'framer-motion';
 
-export default function saveFooter(props) {
+const SaveFooter: any = (props: any) => {
 	return (
 		<motion.div
 			variants={{
@@ -30,4 +30,6 @@ export default function saveFooter(props) {
 			</button>
 		</motion.div>
 	);
-}
+};
+
+export default SaveFooter;

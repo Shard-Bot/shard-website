@@ -1,12 +1,14 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
+
 import Fade from 'react-bootstrap/Fade';
 import { Dropdown } from 'react-bootstrap';
 
 import styles from './navbar.module.scss';
+import { NextPage } from 'next';
 
-export default function Navbar(props) {
+const Navbar: any = (props: { user: any; lang: any }) => {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -48,7 +50,8 @@ export default function Navbar(props) {
 					</div>
 				)}
 			</div>
-			{/* // )} */}
 		</div>
 	);
-}
+};
+
+export default Navbar;
