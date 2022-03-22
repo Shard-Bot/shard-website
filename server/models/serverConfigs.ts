@@ -2,81 +2,197 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const serverConfigs = new mongoose.Schema({
-	ServerID: String,
+	ServerID: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 	Prefix: {
 		type: String,
 		default: 's!',
 	},
 
 	Channels: {
-		JoinLog: String,
-		ExitLog: String,
-		ModLog: String,
+		JoinLog: {
+			type: String,
+			default: '',
+		},
+		ExitLog: {
+			type: String,
+			default: '',
+		},
+		ModLog: {
+			type: String,
+			default: '',
+		},
+		BotLog: {
+			type: String,
+			default: '',
+		},
 	},
 
 	Roles: {
-		MuteRol: String,
+		MuteRol: {
+			type: String,
+			default: '',
+		},
 	},
 
 	Users: {
-		Trusted: Array,
+		Trusted: {
+			type: Array,
+			default: [],
+		},
 	},
 
-	modules: {
+	Modules: {
 		AntiNuker: {
-			Enabled: Boolean,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
 			Whitelist: {
-				Roles: Array,
-				Users: Array,
+				Roles: {
+					type: Array,
+					default: [],
+				},
+				Users: {
+					type: Array,
+					default: [],
+				},
 			},
 			Config: {
 				maxBans: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxCreateEmojis: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxDeleteEmojis: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxCreatedChannels: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxCreatedRoles: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxDeletedChannels: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxDeletedRoles: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxKicks: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
 				},
 				maxUnbans: {
-					Enabled: Boolean,
-					Limit: Number,
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 5,
+					},
+				},
+				maxInvitedBots: {
+					Enabled: {
+						type: Boolean,
+						default: true,
+					},
+					Limit: {
+						type: Number,
+						default: 1,
+					},
+					IgnoreVerified: {
+						type: Boolean,
+						default: true,
+					},
 				},
 			},
 		},
 
 		Lockdown: {
-			Enabled: Boolean,
-			Mode: String,
-			Target: String,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
+			Mode: {
+				type: String,
+				default: 'mute',
+			},
+			Target: {
+				type: String,
+				default: 'alts',
+			},
 		},
 
 		Automod: {
-			Enabled: Boolean,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
+			PercentTimeLimit: {
+				type: Number,
+				default: 10,
+			},
 			Words: [
 				{
 					Word: String,
@@ -84,53 +200,129 @@ const serverConfigs = new mongoose.Schema({
 				},
 			],
 			Whitelist: {
-				Roles: Array,
-				Users: Array,
+				Roles: {
+					type: Array,
+					default: [],
+				},
+				Users: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
 		AntiWallText: {
-			Enabled: Boolean,
-			Limit: Number,
-			PercentTimeLimit: Number,
-			Percent: Number,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
+			Limit: {
+				type: Number,
+				default: 600,
+			},
+			PercentTimeLimit: {
+				type: Number,
+				default: 10,
+			},
+			Percent: {
+				type: Number,
+				default: 100,
+			},
 			Whitelist: {
-				Roles: Array,
-				Users: Array,
+				Roles: {
+					type: Array,
+					default: [],
+				},
+				Users: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
 		AntiFlood: {
-			Enabled: Boolean,
-			PercentTimeLimit: Number,
-			Percent: Number,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
+			PercentTimeLimit: {
+				type: Number,
+				default: 10,
+			},
+			Percent: {
+				type: Number,
+				default: 15,
+			},
 			Whitelist: {
-				Roles: Array,
-				Users: Array,
+				Roles: {
+					type: Array,
+					default: [],
+				},
+				Users: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
 		AntiCaps: {
-			Enabled: Boolean,
-			Limit: Number,
-			Percent: Number,
-			PercentTimeLimit: Number,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
+			Limit: {
+				type: Number,
+				default: 30,
+			},
+			Percent: {
+				type: Number,
+				default: 30,
+			},
+			PercentTimeLimit: {
+				type: Number,
+				default: 10,
+			},
 			Whitelist: {
-				Roles: Array,
-				Users: Array,
+				Roles: {
+					type: Array,
+					default: [],
+				},
+				Users: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
 		AntiLinks: {
-			AllowImages: Boolean,
-			Percent: Number,
-			PercentTimeLimit: Number,
+			Enabled: {
+				type: Boolean,
+				default: false,
+			},
+			AllowImages: {
+				type: Boolean,
+				default: false,
+			},
+			Percent: {
+				type: Number,
+				default: 100,
+			},
+			PercentTimeLimit: {
+				type: Number,
+				default: 10,
+			},
 			Whitelist: {
-				Roles: Array,
-				Users: Array,
+				Roles: {
+					type: Array,
+					default: [],
+				},
+				Users: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 	},
 });
 
-export default mongoose.model('serverConfigs', serverConfigs, 'serverconfigs');
+export default mongoose.model('serverConfigs', serverConfigs, 'serverConfigsTesting');

@@ -130,6 +130,14 @@ const DashboardGeneral: NextPage = (props: any) => {
 				});
 			}
 
+			for (let i = 0; i < selectOptions.users.default.length; i++) {
+				for (let j = 0; j < values.length; j++) {
+					if (selectOptions.users.default[i].value === values[j].value) {
+						values.splice(j, 1);
+					}
+				}
+			}
+
 			setSelectOptions({
 				...selectOptions,
 				users: {
@@ -183,54 +191,6 @@ const DashboardGeneral: NextPage = (props: any) => {
 					[option]: {
 						// @ts-ignore
 						...selectOptions.channels[option],
-						values: values,
-						isLoading: false,
-					},
-				},
-			});
-		}, 2000);
-	};
-
-	const loadRoles = (inputValue: string) => {
-		if (!inputValue) return;
-
-		clearTimeout(loadRolesTimer);
-		setSelectOptions({
-			...selectOptions,
-			roles: {
-				...selectOptions.roles,
-				muted: {
-					...selectOptions.roles.muted,
-					isLoading: true,
-				},
-			},
-		});
-
-		loadRolesTimer = setTimeout(async () => {
-			let response = await axios({
-				method: 'post',
-				url: `/api/roles/search`,
-				headers: {},
-				data: {
-					query: inputValue,
-					server: props.server.info.id,
-				},
-			});
-
-			let values = response.data.map((role: discord.Role) => {
-				return {
-					value: role.id,
-					label: role.name,
-				};
-			});
-
-			setSelectOptions({
-				...selectOptions,
-				roles: {
-					...selectOptions.roles,
-					muted: {
-						...selectOptions.roles.muted,
-						// @ts-ignore
 						values: values,
 						isLoading: false,
 					},
@@ -305,8 +265,6 @@ const DashboardGeneral: NextPage = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
-
-		console.log(response.data);
 	};
 
 	useEffect(() => {
@@ -317,16 +275,6 @@ const DashboardGeneral: NextPage = (props: any) => {
 				headers: {},
 				data: {
 					users: props.server.config.Users.Trusted,
-					server: props.server.info.id,
-				},
-			});
-
-			const mutedResult = await axios({
-				method: 'post',
-				url: `/api/roles/info`,
-				headers: {},
-				data: {
-					role: props.server.config.Roles.MuteRol,
 					server: props.server.info.id,
 				},
 			});
@@ -355,16 +303,6 @@ const DashboardGeneral: NextPage = (props: any) => {
 						};
 					}),
 					isLoading: false,
-				},
-				roles: {
-					muted: {
-						...selectOptions.roles.muted,
-						default: {
-							value: mutedResult.data.id,
-							label: mutedResult.data.name,
-						},
-						isLoading: false,
-					},
 				},
 				channels: {
 					...selectOptions.channels,
@@ -418,84 +356,11 @@ const DashboardGeneral: NextPage = (props: any) => {
 
 	return (
 		<div className={styles['dashboard-general']}>
-			<Navbar user={props.user} lang={props.lang.navbar} />
 			<Head>
 				<title>{props.lang.pageTitle}</title>
 			</Head>
 
-			<Particles
-				className={styles['']}
-				params={{
-					particles: {
-						number: {
-							value: 10,
-							density: {
-								enable: true,
-								value_area: 800,
-							},
-						},
-						color: {
-							value: '#21252b',
-						},
-						shape: {
-							type: 'polygon',
-							stroke: {
-								width: 0,
-								color: '#000',
-							},
-							polygon: {
-								nb_sides: 6,
-							},
-							image: {
-								width: 100,
-								height: 100,
-							},
-						},
-						opacity: {
-							value: 0.4,
-							random: true,
-							anim: {
-								enable: false,
-								speed: 1,
-								opacity_min: 0.1,
-								sync: false,
-							},
-						},
-						size: {
-							value: 160,
-							random: true,
-							anim: {
-								enable: true,
-								speed: 10,
-								size_min: 40,
-								sync: false,
-							},
-						},
-						line_linked: {
-							enable: false,
-							distance: 200,
-							color: '#ffffff',
-							opacity: 1,
-							width: 2,
-						},
-						move: {
-							enable: true,
-							speed: 1,
-							direction: 'none',
-							random: false,
-							straight: false,
-							out_mode: 'out',
-							bounce: false,
-							attract: {
-								enable: false,
-								rotateX: 600,
-								rotateY: 1200,
-							},
-						},
-					},
-					retina_detect: true,
-				}}
-			/>
+			<Navbar user={props.user} lang={props.lang.navbar} />
 
 			<main>
 				<Container fluid={true} className={styles['title']}>
@@ -542,6 +407,15 @@ const DashboardGeneral: NextPage = (props: any) => {
 											Trusted: value.map((v) => v.value),
 										},
 									});
+
+									setSelectOptions({
+										...selectOptions,
+										users: {
+											...selectOptions.users,
+											// @ts-ignore
+											default: value,
+										},
+									});
 								}}
 								components={{
 									NoOptionsMessage: () => null,
@@ -558,41 +432,6 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 							<br />
-
-							<h2>{props.lang.roles.muted}</h2>
-							<Select
-								styles={selectStyles}
-								isLoading={selectOptions.roles.muted.isLoading}
-								value={selectOptions.roles.muted.default}
-								onInputChange={(e) => loadRoles(e)}
-								components={{
-									NoOptionsMessage: () => null,
-									ClearIndicator: () => null,
-								}}
-								onChange={(value) => {
-									setSelectOptions({
-										...selectOptions,
-										roles: {
-											...selectOptions.roles,
-											muted: {
-												...selectOptions.roles.muted,
-												default: value,
-											},
-										},
-									});
-
-									setConfig({
-										...config,
-										Roles: {
-											...config.Roles,
-											// @ts-ignore
-											MuteRol: value.value,
-										},
-									});
-								}}
-								placeholder={props.lang.select}
-								options={selectOptions.roles.muted.values}
-							/>
 						</Col>
 						<Col className={styles['right-container']}>
 							<h2>{props.lang.channels.join}</h2>

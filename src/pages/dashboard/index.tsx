@@ -27,8 +27,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		headers: context.req.headers as any,
 	});
 
-	console.log(data)
-
 	return {
 		props: {
 			lang: data.lang,

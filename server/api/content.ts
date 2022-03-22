@@ -51,6 +51,13 @@ router.get('/dashboard', (req: express.Request, res: express.Response) => {
 				lang: getLang(req.headers['accept-language']).dashboard.general,
 				session: sessions.get(`${req.user.id}_${req.user.sessionID}`),
 			});
+			break;
+		case 'antispam':
+			res.status(200).send({
+				lang: getLang(req.headers['accept-language']).dashboard.antispam,
+				session: sessions.get(`${req.user.id}_${req.user.sessionID}`),
+			});
+			break;
 	}
 });
 

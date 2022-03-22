@@ -49,19 +49,30 @@ router.post('/search', (req: express.Request, res: express.Response) => {
 	}
 });
 
-router.post('/info', (req: express.Request, res: express.Response) => {
-	if (!req.body.role || !req.body.server) return res.send('err-missing-params');
-	if (typeof req.body.role !== 'string' || typeof req.body.server !== 'string') return res.send('err-invalid-params');
+router.post('/getInfo', (req: express.Request, res: express.Response) => {
+	if (!req.body.roles || !req.body.server) return res.send('err-missing-params');
+	if (typeof req.body.roles !== 'object' || typeof req.body.server !== 'string') return res.send('err-invalid-params');
 
 	try {
-		// @ts-ignore
-		let role: discord.Role = bot.guilds.cache.get(req.body.server)?.roles.cache.get(req.body.role);
-		if (role === undefined) return res.send('err-invalid-params');
+		let roles: discord.Role[] = [];
+		if (req.body.roles.length === 0) return res.send([]);
 
-		return res.send({
-			id: role.id,
-			name: role.name,
+		req.body.roles.forEach((role: string) => {
+			if (role === undefined) return res.send('err-invalid-params');
+
+			bot.guilds.cache.get(req.body.server)?.roles.cache.forEach((r: discord.Role) => {
+				if (r.id === role) roles.push(r);
+			});
 		});
+
+		let result = roles.map(rol => {
+			return {
+				value: rol.id,
+				label: rol.name,
+			}
+		})
+
+		return res.send(result);
 	} catch (err) {
 		reportError(err);
 		return res.send('err-internal-error');

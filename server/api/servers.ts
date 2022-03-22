@@ -54,19 +54,20 @@ router.get('/info', async (req: express.Request, res: express.Response) => {
 		let session = sessions.get(`${req.body.user.id}_${req.body.user.sessionID}`);
 		if (session == null) return res.send('err-session-expired');
 
-		console.log(session.servers);
-
 		let server = session.servers.find((server: discord.Guild) => server.id == req.body.server);
 		if (server == null) return res.send('err-server-not-found');
 
 		if (server.isBotOnServer == false || !server.permissionsFlags.includes('MANAGE_GUILD') || server == undefined)
 			return res.send('err-no-permissions');
 
-		let guild = bot.guilds.cache.get(req.body.server);
+		let guild = bot.guilds.cache.get(server.id);
 		if (guild == undefined) return res.send('err-server-not-found');
 
 		let serverConfig = await serverConfigs.findOne({ ServerID: req.body.server });
-		if (serverConfig == null) return res.send('err-server-not-found');
+		if (serverConfig == null) {
+			serverConfig = new serverConfigs({ ServerID: server.id });
+			serverConfig.save();
+		}
 
 		return res.send({
 			config: serverConfig,

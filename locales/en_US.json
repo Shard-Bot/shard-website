@@ -120,6 +120,43 @@
 				"save": "Save",
 				"reset": "Reset"
 			}
+		},
+		"antispam": {
+			"pageTitle": "Shard Bot | AntiSpam Settings",
+			"pageDescription": "Manage Shard Bot from this panel.",
+			"title": "Anti-Spam",
+			
+			"textWalls": "Anti Text Walls",
+			"flood": "Anti Flood",
+			"caps": "Anti Caps",
+			
+			"status": "Status:",
+			"charLimit": "Character Limit:",
+
+			"resetTimeout": "Percentage Reset Timeout (seconds):",
+			"resetTimeoutDesc": "How much time should pass before the trigger percentage is reset",
+
+			"percentage": "Trigger Percentage:",
+			"percentageDesc": "How much the percentage should increase (every time the action triggers) before punishing a user (When it reaches 100%, the user will be punished)",
+
+			"whitelistUsers": "Whitelisted Users:",
+			"whitelistUsersDesc": "Users that are exempt from the anti-spam system",
+
+			"whitelistRoles": "Whitelisted Roles:",
+			"whitelistRolesDesc": "Roles that are exempt from the anti-spam system",
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			},
+
+			"saveFooter": {
+				"content": "Careful, you have unsaved changes.",
+				"save": "Save",
+				"reset": "Reset"
+			}
 		}
 	}
 }

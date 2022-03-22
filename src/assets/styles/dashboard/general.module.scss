@@ -3,11 +3,13 @@
 	background-color: #282c34;
 	color: #fff;
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	main {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+		margin-top: 10vh;
+		margin-bottom: 15vh;
 
 		padding: 20px;
 		width: 75vw;
@@ -65,13 +67,11 @@
 @media screen and (max-width: 768px) {
 	.dashboard-general {
 		main {
-			top: 70%;
-			width: 100vw;
-			// background-color: #282c34 !important;
+			width: 90vw;
 			box-shadow: none !important;
 
 			.right-container {
-				margin-top: 60px;
+				margin-top: 10px;
 			}
 		}
 	}

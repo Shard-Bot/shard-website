@@ -48,85 +48,11 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 const Dashboard: NextPage = (props: any) => {
 	return (
 		<div className={styles['dashboard']}>
+			<Navbar lang={props.lang.navbar} user={props.user} />
 			<Head>
 				<title>{props.lang.pageTitle}</title>
 			</Head>
 
-			<Particles
-				className={styles['']}
-				params={{
-					particles: {
-						number: {
-							value: 10,
-							density: {
-								enable: true,
-								value_area: 800,
-							},
-						},
-						color: {
-							value: '#21252b',
-						},
-						shape: {
-							type: 'polygon',
-							stroke: {
-								width: 0,
-								color: '#000',
-							},
-							polygon: {
-								nb_sides: 6,
-							},
-							image: {
-								width: 100,
-								height: 100,
-							},
-						},
-						opacity: {
-							value: 0.4,
-							random: true,
-							anim: {
-								enable: false,
-								speed: 1,
-								opacity_min: 0.1,
-								sync: false,
-							},
-						},
-						size: {
-							value: 160,
-							random: true,
-							anim: {
-								enable: true,
-								speed: 10,
-								size_min: 40,
-								sync: false,
-							},
-						},
-						line_linked: {
-							enable: false,
-							distance: 200,
-							color: '#ffffff',
-							opacity: 1,
-							width: 2,
-						},
-						move: {
-							enable: true,
-							speed: 1,
-							direction: 'none',
-							random: false,
-							straight: false,
-							out_mode: 'out',
-							bounce: false,
-							attract: {
-								enable: false,
-								rotateX: 600,
-								rotateY: 1200,
-							},
-						},
-					},
-					retina_detect: true,
-				}}
-			/>
-
-			<Navbar lang={props.lang.navbar} user={props.user} />
 
 			<main>
 				<Container>
@@ -137,7 +63,6 @@ const Dashboard: NextPage = (props: any) => {
 								alt={`${props.server.info.name}'s Icon`}
 								className='rounded-circle'
 							/>
-							<br />
 							<h1>Server Info</h1>
 							<p>
 								<strong>{props.lang.serverInfo.name}:</strong> {props.server.info.name}
@@ -157,10 +82,10 @@ const Dashboard: NextPage = (props: any) => {
 						</Col>
 						<Col className={styles['buttons']}>
 							<h1>{props.lang.configTitles.title}</h1>
-							<a href={`general`}>{props.lang.configTitles.general}</a> <br />
-							<a href={`antispam`}>{props.lang.configTitles.antispam}</a> <br />
-							<a href={`antinuker`}>{props.lang.configTitles.antinuker}</a> <br />
-							<a href={`lockdown`}>{props.lang.configTitles.lockdown}</a> <br />
+							<a href={`general`}>{props.lang.configTitles.general}</a><br />
+							<a href={`antispam`}>{props.lang.configTitles.antispam}</a><br />
+							<a href={`antinuker`}>{props.lang.configTitles.antinuker}</a><br />
+							<a href={`lockdown`}>{props.lang.configTitles.lockdown}</a><br />
 							<a href={`automod`}>{props.lang.configTitles.automod}</a>
 						</Col>
 					</Row>

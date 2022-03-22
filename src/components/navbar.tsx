@@ -13,7 +13,9 @@ const Navbar: any = (props: { user: any; lang: any }) => {
 
 	return (
 		<div className={styles['navbar']}>
-			<img width='50' src='/assets/images/logo.png' alt='Shard Logo' />
+			<a href='/'>
+				<img width='50' src='/assets/images/logo.png' alt='Shard Logo' />
+			</a>
 			<h1>Shard Bot</h1>
 
 			<div className={`${styles['align-left']}`}>

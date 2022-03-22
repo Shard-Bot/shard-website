@@ -1,5 +1,5 @@
 .save-footer {
-    position: absolute;
+    position: fixed;
     left: 50%;
     bottom: 0%;
     transform: translate(-50%, -50%);
@@ -39,5 +39,13 @@
 
     .reset-button {
         background-color: #ff5252;
+    }
+}
+
+// Mobile View
+@media screen and (max-width: 768px) {
+	.save-footer {
+    width: 99vw;
+
     }
 }
