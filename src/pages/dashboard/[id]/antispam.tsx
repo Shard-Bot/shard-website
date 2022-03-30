@@ -9,7 +9,6 @@ import HelpTooltip from '../../../components/help-tooltip';
 import Switch from 'react-switch';
 import { Container, Row, Col } from 'react-bootstrap';
 import Head from 'next/head';
-import Particles from 'react-tsparticles';
 import Select from 'react-select';
 
 import styles from '../../../assets/styles/dashboard/antispam.module.scss';
@@ -63,9 +62,29 @@ const AntiSpam = (props: any) => {
 				default: [],
 				isLoading: true,
 			},
+			antiFlood: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiCaps: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
 		},
 		roles: {
 			wallText: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiFlood: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiCaps: {
 				values: [],
 				default: [],
 				isLoading: true,
@@ -107,9 +126,9 @@ const AntiSpam = (props: any) => {
 				});
 			}
 
-			for (let i = 0; i < selectOptions.users.wallText.default.length; i++) {
+			for (let i = 0; i < selectOptions.users[field].default.length; i++) {
 				for (let j = 0; j < values.length; j++) {
-					if (selectOptions.users.wallText.default[i].value == values[j].value) {
+					if (selectOptions.users[field].default[i].value == values[j].value) {
 						values.splice(j, 1);
 					}
 				}
@@ -279,6 +298,46 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			const floodWhiteListedUsers = await axios({
+				method: 'post',
+				url: `/api/users/getInfo`,
+				headers: {},
+				data: {
+					users: props.server.config.Modules.AntiFlood.Whitelist.Users,
+					server: props.server.info.id,
+				},
+			});
+
+			const floodWhiteListedRoles = await axios({
+				method: 'post',
+				url: `/api/roles/getInfo`,
+				headers: {},
+				data: {
+					roles: props.server.config.Modules.AntiFlood.Whitelist.Roles,
+					server: props.server.info.id,
+				},
+			});
+
+			const capsWhiteListedUsers = await axios({
+				method: 'post',
+				url: `/api/users/getInfo`,
+				headers: {},
+				data: {
+					users: props.server.config.Modules.AntiCaps.Whitelist.Users,
+					server: props.server.info.id,
+				},
+			});
+
+			const capsWhiteListedRoles = await axios({
+				method: 'post',
+				url: `/api/roles/getInfo`,
+				headers: {},
+				data: {
+					roles: props.server.config.Modules.AntiCaps.Whitelist.Roles,
+					server: props.server.info.id,
+				},
+			});
+
 			setSelectOptions({
 				...selectOptions,
 				users: {
@@ -293,12 +352,42 @@ const AntiSpam = (props: any) => {
 						}),
 						isLoading: false,
 					},
+					antiFlood: {
+						...selectOptions.users.antiFlood,
+						default: floodWhiteListedUsers.data.map((user) => {
+							return {
+								value: user.id,
+								label: `${user.username}#${user.discriminator}`,
+							};
+						}),
+						isLoading: false,
+					},
+					antiCaps: {
+						...selectOptions.users.antiCaps,
+						default: capsWhiteListedUsers.data.map((user) => {
+							return {
+								value: user.id,
+								label: `${user.username}#${user.discriminator}`,
+							};
+						}),
+						isLoading: false,
+					},
 				},
 				roles: {
 					...selectOptions.roles,
 					wallText: {
 						...selectOptions.roles.wallText,
 						default: wallTextWhiteListedRoles.data,
+						isLoading: false,
+					},
+					antiFlood: {
+						...selectOptions.roles.antiFlood,
+						default: floodWhiteListedRoles.data,
+						isLoading: false,
+					},
+					antiCaps: {
+						...selectOptions.roles.antiCaps,
+						default: capsWhiteListedRoles.data,
 						isLoading: false,
 					},
 				},
@@ -525,15 +614,15 @@ const AntiSpam = (props: any) => {
 						<Col>
 							<h5>{props.lang.status}</h5>
 							<Switch
-								checked={config.Modules.AntiWallText.Enabled}
+								checked={config.Modules.AntiFlood.Enabled}
 								onChange={() => {
 									setConfig({
 										...config,
 										Modules: {
 											...config.Modules,
-											AntiWallText: {
-												...config.Modules.AntiWallText,
-												Enabled: !config.Modules.AntiWallText.Enabled,
+											AntiFlood: {
+												...config.Modules.AntiFlood,
+												Enabled: !config.Modules.AntiFlood.Enabled,
 											},
 										},
 									});
@@ -548,8 +637,149 @@ const AntiSpam = (props: any) => {
 								height={20}
 								width={48}
 							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.percentage} <HelpTooltip body={props.lang.percentageDesc} />
+							</h5>
+							<input
+								type='number'
+								value={config.Modules.AntiFlood.Percent}
+								max={100}
+								min={1}
+								onChange={(e) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiFlood: {
+												...config.Modules.AntiFlood,
+												Percent: parseInt(e.target.value),
+											},
+										},
+									});
+								}}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.resetTimeout} <HelpTooltip body={props.lang.resetTimeoutDesc} />
+							</h5>
+							<input
+								type='number'
+								value={config.Modules.AntiFlood.PercentTimeLimit}
+								max={300}
+								min={1}
+								onChange={(e) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiFlood: {
+												...config.Modules.AntiFlood,
+												PercentTimeLimit: parseInt(e.target.value),
+											},
+										},
+									});
+								}}
+							/>
 						</Col>
-						<Col className={styles['right-container']}>ejwioqejqw</Col>
+						<Col className={styles['right-container']}>
+							<h5>
+								{props.lang.whitelistUsers} <HelpTooltip body={props.lang.whitelistUsersDesc} />
+							</h5>
+							<Select
+								options={selectOptions.users.antiFlood.values}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiFlood: {
+												...config.Modules.AntiFlood,
+												Whitelist: {
+													...config.Modules.AntiFlood.Whitelist,
+													Users: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										users: {
+											...selectOptions.users,
+											antiFlood: {
+												...selectOptions.users.wallText,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.users.antiFlood.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadUsers(inputValue, 'antiFlood');
+								}}
+								value={selectOptions.users.antiFlood.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistRoles} <HelpTooltip body={props.lang.whitelistRolesDesc} />
+							</h5>
+							<Select
+								options={selectOptions.roles.antiFlood.values}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiFlood: {
+												...config.Modules.AntiFlood,
+												Whitelist: {
+													...config.Modules.AntiFlood.Whitelist,
+													Roles: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										roles: {
+											...selectOptions.roles,
+											antiFlood: {
+												...selectOptions.roles.antiFlood,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.roles.antiFlood.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadRoles(inputValue, 'antiFlood');
+								}}
+								value={selectOptions.roles.antiFlood.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+						</Col>
 					</Row>
 				</Container>
 				<br />
@@ -560,15 +790,15 @@ const AntiSpam = (props: any) => {
 						<Col>
 							<h5>{props.lang.status}</h5>
 							<Switch
-								checked={config.Modules.AntiWallText.Enabled}
+								checked={config.Modules.AntiCaps.Enabled}
 								onChange={() => {
 									setConfig({
 										...config,
 										Modules: {
 											...config.Modules,
-											AntiWallText: {
-												...config.Modules.AntiWallText,
-												Enabled: !config.Modules.AntiWallText.Enabled,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												Enabled: !config.Modules.AntiCaps.Enabled,
 											},
 										},
 									});
@@ -583,8 +813,149 @@ const AntiSpam = (props: any) => {
 								height={20}
 								width={48}
 							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.percentage} <HelpTooltip body={props.lang.percentageDesc} />
+							</h5>
+							<input
+								type='number'
+								value={config.Modules.AntiCaps.Percent}
+								max={100}
+								min={1}
+								onChange={(e) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												Percent: parseInt(e.target.value),
+											},
+										},
+									});
+								}}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.resetTimeout} <HelpTooltip body={props.lang.resetTimeoutDesc} />
+							</h5>
+							<input
+								type='number'
+								value={config.Modules.AntiCaps.PercentTimeLimit}
+								max={300}
+								min={1}
+								onChange={(e) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												PercentTimeLimit: parseInt(e.target.value),
+											},
+										},
+									});
+								}}
+							/>
 						</Col>
-						<Col className={styles['right-container']}>ejwioqejqw</Col>
+						<Col className={styles['right-container']}>
+							<h5>
+								{props.lang.whitelistUsers} <HelpTooltip body={props.lang.whitelistUsersDesc} />
+							</h5>
+							<Select
+								options={selectOptions.users.antiCaps.values}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												Whitelist: {
+													...config.Modules.AntiCaps.Whitelist,
+													Users: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										users: {
+											...selectOptions.users,
+											antiCaps: {
+												...selectOptions.users.antiCaps,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.users.antiCaps.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadUsers(inputValue, 'antiCaps');
+								}}
+								value={selectOptions.users.antiCaps.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistRoles} <HelpTooltip body={props.lang.whitelistRolesDesc} />
+							</h5>
+							<Select
+								options={selectOptions.roles.antiCaps.values}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												Whitelist: {
+													...config.Modules.AntiCaps.Whitelist,
+													Roles: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										roles: {
+											...selectOptions.roles,
+											antiCaps: {
+												...selectOptions.roles.antiCaps,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.roles.antiCaps.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadRoles(inputValue, 'antiCaps');
+								}}
+								value={selectOptions.roles.antiCaps.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+						</Col>
 					</Row>
 				</Container>
 			</main>

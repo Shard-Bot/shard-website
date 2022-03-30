@@ -58,6 +58,11 @@ router.get('/dashboard', (req: express.Request, res: express.Response) => {
 				session: sessions.get(`${req.user.id}_${req.user.sessionID}`),
 			});
 			break;
+		case 'antinuker':
+			res.status(200).send({
+				lang: getLang(req.headers['accept-language']).dashboard.antinuker,
+				session: sessions.get(`${req.user.id}_${req.user.sessionID}`),
+			});
 	}
 });
 

@@ -125,11 +125,11 @@
 			"pageTitle": "Shard Bot | AntiSpam Settings",
 			"pageDescription": "Manage Shard Bot from this panel.",
 			"title": "Anti-Spam",
-			
+
 			"textWalls": "Anti Text Walls",
 			"flood": "Anti Flood",
 			"caps": "Anti Caps",
-			
+
 			"status": "Status:",
 			"charLimit": "Character Limit:",
 
@@ -140,10 +140,30 @@
 			"percentageDesc": "How much the percentage should increase (every time the action triggers) before punishing a user (When it reaches 100%, the user will be punished)",
 
 			"whitelistUsers": "Whitelisted Users:",
-			"whitelistUsersDesc": "Users that are exempt from the anti-spam system",
+			"whitelistUsersDesc": "Users that are exempt from the system",
 
 			"whitelistRoles": "Whitelisted Roles:",
-			"whitelistRolesDesc": "Roles that are exempt from the anti-spam system",
+			"whitelistRolesDesc": "Roles that are exempt from the system",
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			},
+
+			"saveFooter": {
+				"content": "Careful, you have unsaved changes.",
+				"save": "Save",
+				"reset": "Reset"
+			}
+		},
+		"antinuker": {
+			"pageTitle": "Shard Bot | AntiNuker Settings",
+			"pageDescription": "Manage Shard Bot from this panel.",
+			"title": "Anti-Nuker",
+
+			"status": "Status:",
 
 			"navbar": {
 				"logout": "Logout",

@@ -1,11 +1,11 @@
-.dashboard-general {
-	font-family: 'Inter';
-	background-color: #282c34;
-	color: #fff;
-
+.dashboard-antinuker {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	font-family: 'Inter';
+	color: #fff;
+	background-color: #282c34;
 
 	main {
 		margin-top: 10vh;
@@ -52,26 +52,15 @@
 	}
 }
 
-// Desktop styles
-@media screen and (min-width: 768px) {
-	.dashboard-general {
-		main {
-			input {
-				width: 80%;
-			}
-		}
-	}
-}
-
 // Mobile View
 @media screen and (max-width: 768px) {
-	.dashboard-general {
+	.dashboard-antinuker {
 		main {
 			width: 90vw;
 			box-shadow: none !important;
 
 			.right-container {
-				margin-top: 10px;
+				margin-top: 30px;
 			}
 		}
 	}

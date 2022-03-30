@@ -2,10 +2,20 @@ import express from 'express';
 import next from 'next';
 import discord from 'discord.js';
 import chalk from 'chalk';
+import minimist from 'minimist';
+
 require('dotenv').config();
 
-const dev: any = true;
-const port: string | number = process.env.PORT || 3000;
+let launchArgs = minimist(process.argv.slice(2), {
+	string: ['dev', 'port'],
+	default: {
+		dev: true,
+		port: 8080,
+	},
+});
+
+const dev: any = launchArgs.dev === 'true' || launchArgs.dev === true;
+const port: string | number = launchArgs.port;
 
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
@@ -24,7 +34,7 @@ nextApp.prepare().then(() => {
 		handle(req, res);
 	});
 
-	bot.login(process.env.DISCORD_TOKEN);
+	bot.login(process.env.TOKEN);
 
 	bot.on('ready', () => {
 		console.log(chalk.magenta('event ') + `- ${bot.user?.username} is ready`);
@@ -33,17 +43,10 @@ nextApp.prepare().then(() => {
 	const clean = async (text: string) => {
 		// If our input is a promise, await it before continuing
 		if (text && text.constructor.name == 'Promise') text = await text;
-
-		// If the response isn't a string, `util.inspect()`
-		// is used to 'stringify' the code in a safe way that
-		// won't error out on objects with circular references
-		// (like Collections, for example)
 		if (typeof text !== 'string') text = require('util').inspect(text, { depth: 1 });
 
-		// Replace symbols with character code alternatives
 		text = text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
 
-		// Send off the cleaned up result
 		return text;
 	};
 
@@ -70,6 +73,3 @@ nextApp.prepare().then(() => {
 });
 
 export { nextApp, app, bot };
-function clean(evaled: any) {
-	throw new Error('Function not implemented.');
-}
