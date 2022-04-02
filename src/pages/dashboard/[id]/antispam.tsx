@@ -92,6 +92,8 @@ const AntiSpam = (props: any) => {
 		},
 	});
 
+	const isOwnerOrTrusted = config.Users.Trusted.includes(props.user.id) || props.server.ownerID == props.user.id;
+
 	const loadUsers = (inputValue: string, field: string) => {
 		if (!inputValue) return;
 
@@ -183,9 +185,9 @@ const AntiSpam = (props: any) => {
 				});
 			}
 
-			for (let i = 0; i < selectOptions.roles.wallText.default.length; i++) {
+			for (let i = 0; i < selectOptions.roles[field].default.length; i++) {
 				for (let j = 0; j < values.length; j++) {
-					if (selectOptions.roles.wallText.default[i].value == values[j].value) {
+					if (selectOptions.roles[field].default[i].value == values[j].value) {
 						values.splice(j, 1);
 					}
 				}
@@ -420,7 +422,6 @@ const AntiSpam = (props: any) => {
 			<Head>
 				<title>{props.lang.pageTitle}</title>
 			</Head>
-
 			<main>
 				<Container fluid={true} className={styles['title']}>
 					<img
@@ -452,6 +453,7 @@ const AntiSpam = (props: any) => {
 										},
 									});
 								}}
+								disabled={!isOwnerOrTrusted}
 								onColor='#86d3ff'
 								onHandleColor='#2693e6'
 								handleDiameter={30}
@@ -462,29 +464,6 @@ const AntiSpam = (props: any) => {
 								height={20}
 								width={48}
 							/>
-							<br />
-							<br />
-							<h5>
-								{props.lang.percentage} <HelpTooltip body={props.lang.percentageDesc} />
-							</h5>
-							<input
-								type='number'
-								value={config.Modules.AntiWallText.Percent}
-								max={100}
-								min={1}
-								onChange={(e) => {
-									setConfig({
-										...config,
-										Modules: {
-											...config.Modules,
-											AntiWallText: {
-												...config.Modules.AntiWallText,
-												Percent: parseInt(e.target.value),
-											},
-										},
-									});
-								}}
-							/>
 
 							<br />
 							<br />
@@ -493,9 +472,9 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<input
 								type='number'
+								placeholder={props.lang.resetTimeoutPlaceholder}
 								value={config.Modules.AntiWallText.PercentTimeLimit}
-								max={300}
-								min={1}
+								disabled={!isOwnerOrTrusted}
 								onChange={(e) => {
 									setConfig({
 										...config,
@@ -516,6 +495,7 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<Select
 								options={selectOptions.users.wallText.values}
+								isDisabled={!isOwnerOrTrusted}
 								onChange={(value) => {
 									setConfig({
 										...config,
@@ -563,6 +543,7 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<Select
 								options={selectOptions.roles.wallText.values}
+								isDisabled={!isOwnerOrTrusted}
 								onChange={(value) => {
 									setConfig({
 										...config,
@@ -615,6 +596,7 @@ const AntiSpam = (props: any) => {
 							<h5>{props.lang.status}</h5>
 							<Switch
 								checked={config.Modules.AntiFlood.Enabled}
+								disabled={!isOwnerOrTrusted}
 								onChange={() => {
 									setConfig({
 										...config,
@@ -645,9 +627,9 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<input
 								type='number'
+								placeholder={props.lang.percentagePlaceholder}
 								value={config.Modules.AntiFlood.Percent}
-								max={100}
-								min={1}
+								disabled={!isOwnerOrTrusted}
 								onChange={(e) => {
 									setConfig({
 										...config,
@@ -669,9 +651,9 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<input
 								type='number'
+								placeholder={props.lang.resetTimeoutPlaceholder}
 								value={config.Modules.AntiFlood.PercentTimeLimit}
-								max={300}
-								min={1}
+								disabled={!isOwnerOrTrusted}
 								onChange={(e) => {
 									setConfig({
 										...config,
@@ -692,6 +674,7 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<Select
 								options={selectOptions.users.antiFlood.values}
+								isDisabled={!isOwnerOrTrusted}
 								onChange={(value) => {
 									setConfig({
 										...config,
@@ -739,6 +722,7 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<Select
 								options={selectOptions.roles.antiFlood.values}
+								isDisabled={!isOwnerOrTrusted}
 								onChange={(value) => {
 									setConfig({
 										...config,
@@ -791,6 +775,7 @@ const AntiSpam = (props: any) => {
 							<h5>{props.lang.status}</h5>
 							<Switch
 								checked={config.Modules.AntiCaps.Enabled}
+								disabled={!isOwnerOrTrusted}
 								onChange={() => {
 									setConfig({
 										...config,
@@ -821,9 +806,9 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<input
 								type='number'
+								placeholder={props.lang.percentagePlaceholder}
 								value={config.Modules.AntiCaps.Percent}
-								max={100}
-								min={1}
+								disabled={!isOwnerOrTrusted}
 								onChange={(e) => {
 									setConfig({
 										...config,
@@ -845,9 +830,9 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<input
 								type='number'
+								placeholder={props.lang.resetTimeoutPlaceholder}
 								value={config.Modules.AntiCaps.PercentTimeLimit}
-								max={300}
-								min={1}
+								disabled={!isOwnerOrTrusted}
 								onChange={(e) => {
 									setConfig({
 										...config,
@@ -868,6 +853,7 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<Select
 								options={selectOptions.users.antiCaps.values}
+								isDisabled={!isOwnerOrTrusted}
 								onChange={(value) => {
 									setConfig({
 										...config,
@@ -915,6 +901,7 @@ const AntiSpam = (props: any) => {
 							</h5>
 							<Select
 								options={selectOptions.roles.antiCaps.values}
+								isDisabled={!isOwnerOrTrusted}
 								onChange={(value) => {
 									setConfig({
 										...config,
@@ -958,6 +945,11 @@ const AntiSpam = (props: any) => {
 						</Col>
 					</Row>
 				</Container>
+
+				<br />
+				<br />
+
+				{!isOwnerOrTrusted && props.lang.permissionsNote}
 			</main>
 
 			<footer>

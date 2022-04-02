@@ -48,6 +48,10 @@
 				outline: none;
 				border: 2px solid #009af8;
 			}
+
+			&:disabled {
+				color: rgb(179, 179, 179);
+			}
 		}
 	}
 }

@@ -5,6 +5,7 @@ import discord from 'discord.js';
 
 import Navbar from '../../../components/navbar';
 import SaveFooter from '../../../components/save-footer';
+import HelpTooltip from '../../../components/help-tooltip';
 
 import { Container, Col, Row } from 'react-bootstrap';
 import Head from 'next/head';
@@ -85,6 +86,14 @@ const DashboardGeneral: NextPage = (props: any) => {
 				isLoading: true,
 			},
 			ModLog: {
+				values: [],
+				default: {
+					label: '',
+					value: '',
+				},
+				isLoading: true,
+			},
+			BotLog: {
 				values: [],
 				default: {
 					label: '',
@@ -288,6 +297,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 						{ id: props.server.config.Channels.ExitLog, key: 'ExitLog' },
 						{ id: props.server.config.Channels.JoinLog, key: 'JoinLog' },
 						{ id: props.server.config.Channels.ModLog, key: 'ModLog' },
+						{ id: props.server.config.Channels.ModLog, key: 'BotLog' },
 					],
 				},
 			});
@@ -327,6 +337,14 @@ const DashboardGeneral: NextPage = (props: any) => {
 						default: {
 							value: channelResult.data.ModLog.value,
 							label: `#${channelResult.data.ModLog.label}`,
+						},
+						isLoading: false,
+					},
+					BotLog: {
+						...selectOptions.channels.BotLog,
+						default: {
+							value: channelResult.data.BotLog.value,
+							label: `#${channelResult.data.BotLog.label}`,
 						},
 						isLoading: false,
 					},
@@ -377,7 +395,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 				<Container fluid={true}>
 					<Row sm={1} xs={1} md={2}>
 						<Col>
-							<h2>{props.lang.prefix}</h2>
+							<h2>
+								{props.lang.prefix} <HelpTooltip body={props.lang.tooltips.prefix} />
+							</h2>
 							<input
 								defaultValue={props.server.config.Prefix}
 								type='text'
@@ -394,7 +414,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 
-							<h2>{props.lang.users.trusted}</h2>
+							<h2>
+								{props.lang.users.trusted} <HelpTooltip body={props.lang.tooltips.trusted} />
+							</h2>
 							<Select
 								isDisabled={props.server.info.owner !== props.user.id}
 								options={selectOptions.users.values}
@@ -432,9 +454,43 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 							<br />
+
+							<h2>{props.lang.channels.bot} <HelpTooltip body={props.lang.tooltips.bot} /></h2>
+							<Select
+								styles={selectStyles}
+								isLoading={selectOptions.channels.BotLog.isLoading}
+								value={selectOptions.channels.BotLog.default}
+								onInputChange={(e) => loadChannels(e, 'BotLog')}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Channels: {
+											...config.Channels,
+											BotLog: value.value,
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											BotLog: {
+												...selectOptions.channels.BotLog,
+												default: value,
+											},
+										},
+									});
+								}}
+								placeholder={props.lang.select}
+								options={selectOptions.channels.BotLog.values}
+							/>
 						</Col>
 						<Col className={styles['right-container']}>
-							<h2>{props.lang.channels.join}</h2>
+							<h2>{props.lang.channels.join} <HelpTooltip body={props.lang.tooltips.join} /></h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.JoinLog.isLoading}
@@ -472,7 +528,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 
-							<h2>{props.lang.channels.exit}</h2>
+							<h2>{props.lang.channels.exit} <HelpTooltip body={props.lang.tooltips.exit} /></h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.ExitLog.isLoading}
@@ -510,7 +566,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 
-							<h2>{props.lang.channels.mod}</h2>
+							<h2>{props.lang.channels.mod} <HelpTooltip body={props.lang.tooltips.mod} /></h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.ModLog.isLoading}
@@ -546,6 +602,10 @@ const DashboardGeneral: NextPage = (props: any) => {
 						</Col>
 					</Row>
 				</Container>
+
+				<br />
+				<br />
+				{props.lang.note}
 			</main>
 
 			<footer>

@@ -7,6 +7,7 @@ import cors from 'cors';
 
 import serverConfigs from '../models/serverConfigs';
 import { reportError } from '../utils/error';
+import { validateAndUpdate } from '../utils/validate';
 import { bot } from '../index';
 
 const sessions = new quickdb.table('sessions');
@@ -119,12 +120,34 @@ router.post('/save-changes', async (req: express.Request, res: express.Response)
 		if (guild == undefined) return res.send('err-server-not-found');
 
 		let pastConfig = await serverConfigs.findOne({ ServerID: req.body.server });
+		let generatedConfig = new serverConfigs(req.body.config);
+
 		if (pastConfig == null) return res.send('err-server-not-found');
 
+		if (!pastConfig.Users.Trusted.includes(req.body.user.id) && guild.ownerId !== req.body.user.id) {
+			let pastConfigWithoutPrefixAndChannel = {
+				...pastConfig._doc,
+				Prefix: undefined,
+				Channels: undefined,
+			};
+
+			let submittedConfigWithoutPrefixAndChannel = {
+				...generatedConfig._doc,
+				Prefix: undefined,
+				Channels: undefined,
+			};
+
+			if (JSON.stringify(pastConfigWithoutPrefixAndChannel) !== JSON.stringify(submittedConfigWithoutPrefixAndChannel))
+				return res.send('err-no-permissions');
+		}
+
+		// Check if there are changes on the trusted, if so, check if the user is the owner, if not, return error
 		if (!areArraysEqual(pastConfig.Users.Trusted, req.body.config.Users.Trusted) && guild.ownerId !== req.body.user.id)
 			return res.send('err-no-permissions');
 
-		let newConfig = new serverConfigs(req.body.config);
+		// Fix max and min values
+		let newConfig = validateAndUpdate(generatedConfig);
+
 		serverConfigs.findOneAndUpdate({ ServerID: req.body.server }, newConfig, { upsert: true }, (err, doc) => {
 			if (err) return res.send('err-internal-error');
 			return res.send('success');

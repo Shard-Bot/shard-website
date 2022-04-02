@@ -1,13 +1,13 @@
-.dashboard-antinuker {
+.dashboard-automod {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
+	
 	font-family: 'Inter';
 	color: #fff;
 	background-color: #282c34;
 
-	main {
+    main {
 		margin-top: 10vh;
 		margin-bottom: 15vh;
 
@@ -58,7 +58,7 @@
 
 // Mobile View
 @media screen and (max-width: 768px) {
-	.dashboard-antinuker {
+	.dashboard-antispam {
 		main {
 			width: 90vw;
 			box-shadow: none !important;

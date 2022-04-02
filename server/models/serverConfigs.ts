@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
 
 const serverConfigs = new mongoose.Schema({
 	ServerID: {

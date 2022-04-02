@@ -82,9 +82,9 @@ router.get('/login', async (req: express.Request, res: express.Response) => {
 			});
 			return res.redirect('/dashboard');
 		});
-	} catch (err) {
+	} catch (err: any) {
 		reportError(err);
-		return res.send({ success: false, message: 'err-internal-error' });
+		return res.send({ success: false, message: err.data.error_description });
 	}
 });
 

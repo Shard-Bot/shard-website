@@ -92,18 +92,31 @@
 			"title": "General",
 			"back": "Back",
 			"select": "Select...",
+			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
 
 			"prefix": "Prefix",
+			"prefixPlaceholder": "Set the bot's prefix (between 1 and 6 characters)",
+
 			"channels": {
 				"join": "Join Log Channels",
 				"exit": "Exit Log Channels",
-				"mod": "Mod Log Channels"
+				"mod": "Mod Log Channels",
+				"bot": "Bot Log Channels"
 			},
 			"roles": {
 				"muted": "Muted Role"
 			},
 			"users": {
 				"trusted": "Trusted Users"
+			},
+
+			"tooltips": {
+				"prefix": "The bot's prefix. The bot will respond to commands with this prefix.",
+				"trusted": "Users will be able to edit the bot's settings and be exempt from anti-nuker and anti-spam modules.",
+				"join": "The channels where the bot will log when a user joins the server.",
+				"exit": "The channels where the bot will log when a user leaves the server.",
+				"mod": "The channels where the bot will log when a moderator performs an action.",
+				"bot": "The channels where the bot will log server events."
 			},
 
 			"notFound": "Not Found",
@@ -133,11 +146,16 @@
 			"status": "Status:",
 			"charLimit": "Character Limit:",
 
+			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
+			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",
+
 			"resetTimeout": "Percentage Reset Timeout (seconds):",
 			"resetTimeoutDesc": "How much time should pass before the trigger percentage is reset",
+			"resetTimeoutPlaceholder": "Enter a number (between 1 and 3600)",
 
 			"percentage": "Trigger Percentage:",
 			"percentageDesc": "How much the percentage should increase (every time the action triggers) before punishing a user (When it reaches 100%, the user will be punished)",
+			"percentagePlaceholder": "Enter a percentage (between 20 and 100)",
 
 			"whitelistUsers": "Whitelisted Users:",
 			"whitelistUsersDesc": "Users that are exempt from the system",
@@ -164,6 +182,78 @@
 			"title": "Anti-Nuker",
 
 			"status": "Status:",
+			"config": "Config:",
+			"enabled": "Enabled:",
+
+			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
+			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",
+
+			"whitelistUsers": "Whitelisted Users:",
+			"whitelistUsersDesc": "Users that are exempt from the system",
+
+			"whitelistRoles": "Whitelisted Roles:",
+			"whitelistRolesDesc": "Roles that are exempt from the system",
+
+			"modulesTitles": {
+				"maxBans": "Max Bans",
+				"maxCreatedEmojis": "Max Created Emojis",
+				"maxDeletedEmojis": "Max Deleted Emojis",
+				"maxCreatedRoles": "Max Created Roles",
+				"maxDeletedRoles": "Max Deleted Roles",
+				"maxCreatedChannels": "Max Created Channels",
+				"maxDeletedChannels": "Max Deleted Channels",
+				"maxKicks": "Max Kicks",
+				"maxUnbans": "Max Unbans",
+				"maxInviteBots": {
+					"title": "Can users invite bots?",
+					"ignore": "Ignore verified"
+				}
+			},
+
+			"modulesDescriptions": {
+				"maxBans": "The maximum amount of people that a user can ban under 5 minutes",
+				"maxCreatedEmojis": "The maximum amount of emojis a user can create under 5 minutes",
+				"maxDeletedEmojis": "The maximum amount of emojis a user can delete under 5 minutes",
+				"maxCreatedRoles": "The maximum amount of roles a user can create under 5 minutes",
+				"maxDeletedRoles": "The maximum amount of roles a user can delete under 5 minutes",
+				"maxCreatedChannels": "The maximum amount of channels a user can create under 5 minutes",
+				"maxDeletedChannels": "The maximum amount of channels a user can delete under 5 minutes",
+				"maxKicks": "The maximum amount of kicks a user can have under 5 minutes",
+				"maxUnbans": "The maximum amount of unbans a user can have under 5 minutes",
+				"maxInviteBots": "If the user can invite unverified bots"
+			},
+
+			"modulesPlaceholders": "Limit (between 2 and 10)",
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			},
+
+			"saveFooter": {
+				"content": "Careful, you have unsaved changes.",
+				"save": "Save",
+				"reset": "Reset"
+			}
+		},
+		"lockdown": {},
+		"automod": {
+			"pageTitle": "Shard Bot | Auto-Mod Settings",
+			"pageDescription": "Manage Shard Bot from this panel.",
+			"title": "Auto-Mod",
+
+			"status": "Status:",
+
+			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
+			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",
+
+			"whitelistUsers": "Whitelisted Users:",
+			"whitelistUsersDesc": "Users that are exempt from the system",
+
+			"whitelistRoles": "Whitelisted Roles:",
+			"whitelistRolesDesc": "Roles that are exempt from the system",
 
 			"navbar": {
 				"logout": "Logout",
