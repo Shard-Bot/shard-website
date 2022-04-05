@@ -207,6 +207,10 @@ const serverConfigs = new mongoose.Schema({
 					type: Array,
 					default: [],
 				},
+				Channels: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
@@ -236,6 +240,10 @@ const serverConfigs = new mongoose.Schema({
 					type: Array,
 					default: [],
 				},
+				Channels: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
@@ -258,6 +266,10 @@ const serverConfigs = new mongoose.Schema({
 					default: [],
 				},
 				Users: {
+					type: Array,
+					default: [],
+				},
+				Channels: {
 					type: Array,
 					default: [],
 				},
@@ -290,6 +302,10 @@ const serverConfigs = new mongoose.Schema({
 					type: Array,
 					default: [],
 				},
+				Channels: {
+					type: Array,
+					default: [],
+				},
 			},
 		},
 
@@ -316,6 +332,10 @@ const serverConfigs = new mongoose.Schema({
 					default: [],
 				},
 				Users: {
+					type: Array,
+					default: [],
+				},
+				Channels: {
 					type: Array,
 					default: [],
 				},

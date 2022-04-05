@@ -7,7 +7,7 @@ import SaveFooter from '../../../components/save-footer';
 import HelpTooltip from '../../../components/help-tooltip';
 
 import Switch from 'react-switch';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import Head from 'next/head';
 import Select from 'react-select';
 
@@ -51,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 let loadUsersTimer: any = null;
 let loadRolesTimer: any = null;
+let loadChannelsTimer: any = null;
 
 const AutoMod = (props: any) => {
 	const [config, setConfig] = useState(props.server.config);
@@ -62,6 +63,11 @@ const AutoMod = (props: any) => {
 			isLoading: true,
 		},
 		roles: {
+			values: [],
+			default: [],
+			isLoading: true,
+		},
+		channels: {
 			values: [],
 			default: [],
 			isLoading: true,
@@ -177,7 +183,7 @@ const AutoMod = (props: any) => {
 	const loadRoles = (inputValue: string) => {
 		if (!inputValue) return;
 
-		clearTimeout(loadUsersTimer);
+		clearTimeout(loadRolesTimer);
 		setSelectOptions({
 			...selectOptions,
 			roles: {
@@ -225,6 +231,57 @@ const AutoMod = (props: any) => {
 		}, 2000);
 	};
 
+	const loadChannels = (inputValue: string) => {
+		if (!inputValue) return;
+
+		clearTimeout(loadChannelsTimer);
+
+		setSelectOptions({
+			...selectOptions,
+			channels: {
+				...selectOptions.channels,
+				isLoading: true,
+			},
+		});
+
+		loadChannelsTimer = setTimeout(async () => {
+			const response = await axios({
+				method: 'post',
+				url: `/api/channels/search`,
+				headers: {},
+				data: {
+					query: inputValue,
+					server: props.server.info.id,
+				},
+			});
+
+			let values = [];
+			for (let i = 0; i < response.data.length; i++) {
+				values.push({
+					value: response.data[i].id,
+					label: response.data[i].name,
+				});
+			}
+
+			for (let i = 0; i < selectOptions.channels.default.length; i++) {
+				for (let j = 0; j < values.length; j++) {
+					if (selectOptions.channels.default[i].value == values[j].value) {
+						values.splice(j, 1);
+					}
+				}
+			}
+
+			setSelectOptions({
+				...selectOptions,
+				channels: {
+					...selectOptions.channels,
+					values: values,
+					isLoading: false,
+				},
+			});
+		}, 2000);
+	};
+
 	const saveChanges = async () => {
 		setUnsavedChanges(false);
 
@@ -238,8 +295,24 @@ const AutoMod = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
+	};
 
-		console.log(response.data);
+	const addWord = (word: string, percent: number) => {
+		const newWord = {
+			Word: word,
+			Percent: percent,
+		};
+
+		setConfig({
+			...config,
+			Modules: {
+				...config.Modules,
+				Automod: {
+					...config.Modules.Automod,
+					Words: [...config.Modules.Automod.Words, newWord],
+				},
+			},
+		});
 	};
 
 	useEffect(() => {
@@ -264,6 +337,16 @@ const AutoMod = (props: any) => {
 				},
 			});
 
+			const whitelistChannels = await axios({
+				method: "post",
+				url: `/api/channels/getInfo`,
+				headers: {},
+				data: {
+					channels: props.server.config.Modules.Automod.Whitelist.Channels,
+					server: props.server.info.id,
+				},
+			})
+
 			setSelectOptions({
 				...selectOptions,
 				users: {
@@ -279,6 +362,11 @@ const AutoMod = (props: any) => {
 				roles: {
 					...selectOptions.roles,
 					default: whiteListedRoles.data,
+					isLoading: false,
+				},
+				channels: {
+					...selectOptions.channels,
+					default: whitelistChannels.data,
 					isLoading: false,
 				},
 			});
@@ -304,23 +392,57 @@ const AutoMod = (props: any) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [config]);
 
-	const wordList = config.Modules.Automod.Words.map((word: any) => {
-		let key = word.word;
+	const words = config.Modules.Automod.Words.map((word) => {
+		if (config.Modules.Automod.Words.length == 0) return <p>{props.lang.noWords}</p>;
 
 		return (
-			<div key={key}>
-				<p>{word.Word}</p>
-			</div>
-		);
-	});
+			<Container key={Math.random() * 1000}>
+				<Row xs={2} lg={3}>
+					<Col>
+						{props.lang.word}
+						<input disabled value={word.Word} style={{ width: '100%', color: '#fff' }} />
+					</Col>
+					<Col>
+						{props.lang.percent}
+						<input disabled value={`${word.Percent}%`} style={{ width: '100%', color: '#fff' }} />
+					</Col>
+					<Col>
+						{isOwnerOrTrusted && (
+							<img
+								src='/assets/images/multiply.svg'
+								alt='Delete'
+								width='30px'
+								style={{ cursor: 'pointer', marginTop: '25px' }}
+								onClick={() => {
+									let newWords = config.Modules.Automod.Words;
+									newWords.splice(newWords.indexOf(word), 1);
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											Automod: {
+												...config.Modules.Automod,
+												Words: newWords,
+											},
+										},
+									});
+								}}
+							/>
+						)}
 
-	const percentList = config.Modules.Automod.Words.map((word: any) => {
-		let key = (Math.random() * 1000).toString();
+						{!isOwnerOrTrusted && (
+							<img
+								src='/assets/images/multiply.svg'
+								alt='Delete'
+								style={{ cursor: 'not-allowed', marginTop: '25px' }}
+								width='30px'
+							/>
+						)}
+					</Col>
+				</Row>
 
-		return (
-			<div key={key}>
-				<p>{word.Percent}%</p>
-			</div>
+				<br />
+			</Container>
 		);
 	});
 
@@ -375,20 +497,13 @@ const AutoMod = (props: any) => {
 
 							<br />
 							<br />
-							<Row sm={2}>
-								<Col>
-									<Row>
-										<Col>
-											Words <br />
-											{wordList}
-										</Col>
-										<Col>
-											Percent <br />
-											{percentList}
-										</Col>
-									</Row>
-								</Col>
-							</Row>
+							<br />
+							<br />
+							<h3>{props.lang.words}</h3>
+							<br />
+							{words}
+							<br />
+							<br />
 						</Col>
 						<Col>
 							<h5>
@@ -479,6 +594,104 @@ const AutoMod = (props: any) => {
 								styles={selectStyles}
 								placeholder={props.lang.select}
 							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistChannels} <HelpTooltip body={props.lang.whitelistChannelsDesc} />
+							</h5>
+							<Select
+								options={selectOptions.channels.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											Automod: {
+												...config.Modules.Automod,
+												Whitelist: {
+													...config.Modules.Automod.Whitelist,
+													Channels: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											// @ts-ignore
+											default: value,
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.channels.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadChannels(inputValue);
+								}}
+								value={selectOptions.channels.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+
+							<br />
+							<br />
+							<br />
+
+							<h3>{props.lang.addNew}</h3>
+							<h5>{props.lang.word}</h5>
+							<input
+								type='text'
+								id='addWordWord'
+								disabled={!isOwnerOrTrusted || config.Modules.Automod.Words.length >= 20}
+								placeholder={props.lang.wordPlaceholder}
+							/>
+							<br />
+							<br />
+							<h5>{props.lang.percent}</h5>
+							<input
+								type='number'
+								id='addWordPercent'
+								disabled={!isOwnerOrTrusted || config.Modules.Automod.Words.length >= 20}
+								placeholder={props.lang.percentPlaceholder}
+							/>
+							<br />
+							<br />
+							<Button
+								onClick={(e) => {
+									e.preventDefault();
+									let percentInput = document.getElementById('addWordPercent') as HTMLInputElement;
+									let wordInput = document.getElementById('addWordWord') as HTMLInputElement;
+
+									let percent: number = parseInt(percentInput.value);
+									let word: string = wordInput.value;
+
+									if (percent && word) {
+										if (percent > 100) percent = 100;
+										if (percent < 0) percent = 10;
+
+										if (word.length > 30 || word.length < 3) return alert(props.lang.wordLengthAlert);
+
+										(document.getElementById('addWordPercent') as HTMLInputElement).value = '';
+										(document.getElementById('addWordWord') as HTMLInputElement).value = '';
+
+										return addWord(word, percent);
+									}
+									return alert(props.lang.wordLengthAlert);
+								}}
+								disabled={!isOwnerOrTrusted || config.Modules.Automod.Words.length >= 20}
+								style={{ width: '20%', textAlign: 'center' }}
+								variant='success'
+							>
+								{props.lang.add}
+							</Button>
 						</Col>
 					</Row>
 					<br />

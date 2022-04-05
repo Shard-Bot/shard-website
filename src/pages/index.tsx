@@ -213,8 +213,16 @@ const Index: NextPage = (props: any) => {
 						</Col>
 					</Row>
 
-					<Container className={styles['footer']}>
-						<h1>jeowiq</h1>
+					<Container fluid={true} className={styles['footer']}>
+						<Row>
+							<Col>{props.lang.copyright}</Col>
+							<Col>
+								<a href='https://docs.shardbot.xyz/informacion-general/terminos-de-servicio'>{props.lang.tos}</a>
+							</Col>
+							<Col>
+								<a href='https://docs.shardbot.xyz/informacion-general/politicas-de-privacidad'>{props.lang.privacy}</a>
+							</Col>
+						</Row>
 					</Container>
 				</Container>
 			</main>

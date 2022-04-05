@@ -1,1 +1,364 @@
-{}
+{
+	"main": {
+		"index": {
+			"pageTitle": "Shard Bot",
+			"pageDescription": "Shard modera automáticamente tu servidor con eficiencia.",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"invite": "Invitar",
+				"support": "Soporte",
+				"login": "Ingresar",
+
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			},
+
+			"features": {
+				"title": "Shard te ofrece:",
+				"dashboard": "Manejar las opciones desde un panel de control.",
+				"antinuke": "Prevenir la destrucción de tu servidor.",
+				"antiraid": "Prevenir raids y usuarios maliciosos.",
+				"automodreation": "Moderar tu servidor automaticamente.",
+				"more": "Y más caracteristicas!"
+			},
+
+			"showcase": {
+				"automodTitle": "AutoModeración",	
+				"automodDescription": "Shard modera automáticamente tu servidor con eficiencia.",
+
+				"moderationTitle": "Comandos de moderación.",
+				"moderationDescription": "Shard tiene un puñado de herramientas para  poder moderar tu servidor.",
+
+				"utilitiesTitle": "Utilidades",
+				"utilitiesDescription": "También tiene varias utilidades para tu servidor.",
+
+				"loggingTitle": "Registro",
+				"loggingDescription": "Puedes estar atento a lo que pasa en tu servidor con el sistema de registro de Shard."
+			},
+
+			"copyright": "Copyright © 2021 Equipo de desarrollo de Shard.",
+			"tos": "Terminos de servicio",
+			"privacy": "Política de privacidad"
+		},
+		"servers": {
+			"pageTitle": "Shard Bot | Servidores",
+			"pageDescription": "Accede para administrar tus servidores.",
+
+			"manage": "⚙ Administrar Servidor",
+			"invite": "🔗 Invitar Bot",
+
+			"noServer": "¿No ves tu servidor? & e ingresa otra vez",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			}
+		}
+	},
+	"dashboard": {
+		"index": {
+			"pageTitle": "Shard Bot | Panel de control",
+			"pageDescription": "Administra a Shard desde este panel.",
+			"title": "Panel De Control",
+
+			"configTitles": {
+				"title": "Categorías",
+				"general": "General",
+				"antinuker": "Anti-Nuker",
+				"lockdown": "Lockdown",
+				"automod": "AutoModeración",
+				"antispam": "Anti-Spam"
+			},
+
+			"serverInfo": {
+				"name": "Nombre",
+				"id": "ID",
+				"memberCount": "Miembros",
+				"channelCount": "Canales",
+				"roleCount": "Roles"
+			},
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			}
+		},
+		"general": {
+			"pageTitle": "Shard Bot | Ajustes Generales",
+			"pageDescription": "Administra a Shard desde este panel.",
+
+			"title": "General",
+			"back": "Volver",
+			"select": "Seleccionar...",
+			"note": "* Las entradas tienen valores máximos y mínimos, si no sigue las reglas, el valor se restablecerá al valor predeterminado.",
+
+			"prefix": "Prefix",
+			"prefixPlaceholder": "El prefix del bot (entre 1 y 6 caracteres)",
+
+			"channels": {
+				"join": "Registro de entradas",
+				"exit": "Registro de salidas",
+				"mod": "Registro de moderación",
+				"bot": "Registro de bots"
+			},
+			"roles": {
+				"muted": "Rol de silenciado"
+			},
+			"users": {
+				"trusted": "Usuarios de confianza"
+			},
+
+			"tooltips": {
+				"prefix": "El prefix del bot. El bot va a responder a comandos con este prefix.",
+				"trusted": "Los usuarios de confianza tienen permiso de editar la configuración, aparte van a estar en la whitelist de todos los módulos.",
+				"join": "El canal donde se mandará un mensaje de registro cuando un usuario entra al servidor.",
+				"exit": "El canal donde se mandará un mensaje de registro cuando un usuario sale del servidor.",
+				"mod": "El canal donde se mandará un mensaje de registro cuando un usuario hace una acción de moderación.",
+				"bot": "El canal donde se mandará un mensaje de registro cuando haya un evento del bot."
+			},
+
+			"notFound": "No encontrado",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			},
+
+			"saveFooter": {
+				"content": "Cuidado, tienes cambios sin guardar.",
+				"save": "Guardar",
+				"reset": "Reiniciar"
+			}
+		},
+		"antispam": {
+			"pageTitle": "Shard Bot | Configuración de AntiSpam",
+			"pageDescription": "Administra a Shard desde este panel.",
+			"title": "Anti-Spam",
+
+			"textWalls": "Anti Paredes De Texto",
+			"flood": "Anti Flood",
+			"caps": "Anti Mayúsculas",
+			"links": "Links",
+			"allowImages": "Permitir Imágenes",
+			"allowImagesDesc": "Permitir links si estos son imágenes.",
+
+			"status": "Estado:",
+			"charLimit": "Límite de caracteres:",
+
+			"note": "* Las entradas tienen valores máximos y mínimos, si no sigue las reglas, el valor se restablecerá al valor predeterminado.",
+			"permissionsNote": "* Algunas opciones pueden estar deshabilitadas ya que no estas en la lista de \"usuarios de confianza\"",
+
+			"resetTimeout": "Tiempo para el reinicio de porcentaje (en segundos):",
+			"resetTimeoutDesc": "Cuánto tiempo debe pasar antes de que se restablezca el porcentaje de activación",
+			"resetTimeoutPlaceholder": "Introduzca un número (entre 1 y 3600)",
+
+			"percentage": "Porcentaje de activación:",
+			"percentageDesc": "Cuánto debe aumentar el porcentaje (cada vez que se activa la acción) antes de castigar a un usuario (cuando llegue al 100%, el usuario será castigado)",
+			"percentagePlaceholder": "Introduzca un porcentaje (entre 20 y 100)",
+
+			"wallTextLimitDesc": "La cantidad máxima de caracteres que un usuario puede usar en un solo mensaje.",
+			"wallTextLimitPlaceholder": "Introduzca un número (entre 30 y 4000)",
+
+			"capsLimitDesc": "La cantidad máxima de mayúsculas que un usuario puede usar en un solo mensaje.",
+			"capsLimitPlaceholder": "Introduzca un número (entre 5 y 4000)",
+
+			"whitelistUsers": "Usuarios excluidos",
+			"whitelistUsersDesc": "Usuarios que están exentos del sistema.",
+
+			"whitelistRoles": "Roles excluidos:",
+			"whitelistRolesDesc": "Roles que están exentos del sistema.",
+
+			"whitelistChannels": "Canales excluidos:",
+			"whitelistChannelsDesc": "Canales que están exentos del sistema.",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			},
+
+			"saveFooter": {
+				"content": "Cuidado, tienes cambios sin guardar.",
+				"save": "Guardar",
+				"reset": "Reiniciar"
+			}
+		},
+		"antinuker": {
+			"pageTitle": "Shard Bot | Configuración de AntiNuker",
+			"pageDescription": "Administra a Shard desde este panel.",
+			"title": "Anti-Nuker",
+
+			"status": "Estado:",
+			"config": "Configuración:",
+			"enabled": "Activado:",
+
+			"note": "* Las entradas tienen valores máximos y mínimos, si no sigue las reglas, el valor se restablecerá al valor predeterminado.",
+			"permissionsNote": "* Algunas opciones pueden estar deshabilitadas ya que no estas en la lista de \"usuarios de confianza\".",
+
+			"whitelistUsers": "Usuarios excluidos:",
+			"whitelistUsersDesc": "Usuarios que están exentos del sistema.",
+
+			"whitelistRoles": "Roles excluidos:",
+			"whitelistRolesDesc": "Roles que están exentos del sistema.",
+
+			"modulesTitles": {
+				"maxBans": "Máximo de Baneos",
+				"maxCreatedEmojis": "Máximo de Emojis Creados",
+				"maxDeletedEmojis": "Máximo de Emojis Eliminados",
+				"maxCreatedRoles": "Máximo de Roles Creados",
+				"maxDeletedRoles": "Máximo de Roles Eliminados",
+				"maxCreatedChannels": "Máximo de Canales Creados",
+				"maxDeletedChannels": "Máximo de Canales Eliminados",
+				"maxKicks": "Máximo de Expulsiones",
+				"maxUnbans": "Máximo de Desbaneos",
+				"maxInviteBots": {
+					"title": "¿Los usuarios pueden invitar bots?",
+					"ignore": "Ignorar bots verificados"
+				}
+			},
+
+			"modulesDescriptions": {
+				"maxBans": "Máximo de usuarios que pueden ser baneados por un usuario en 5 minutos.",
+				"maxCreatedEmojis": "Máximo de emojis que pueden ser creados por un usuario en 5 minutos.",
+				"maxDeletedEmojis": "Máximo de emojis que pueden ser eliminados por un usuario en 5 minutos.",
+				"maxCreatedRoles": "Máximo de roles que pueden ser creados por un usuario en 5 minutos.",
+				"maxDeletedRoles": "Máximo de roles que pueden ser eliminados por un usuario en 5 minutos.",
+				"maxCreatedChannels": "Máximo de canales que pueden ser creados por un usuario en 5 minutos.",
+				"maxDeletedChannels": "Máximo de canales que pueden ser eliminados por un usuario en 5 minutos.",
+				"maxKicks": "Máximo de usuarios que pueden ser expulsados por un usuario en 5 minutos.",
+				"maxUnbans": "Máximo de usuarios que pueden ser desbaneados por un usuario en 5 minutos.",
+				"maxInviteBots": "Si el usuario puede invitar bots."
+			},
+
+			"modulesPlaceholders": "Límite (entre 2 y 10)",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			},
+            "saveFooter": {
+				"content": "Cuidado, tienes cambios sin guardar.",
+				"save": "Guardar",
+				"reset": "Reiniciar"
+			}
+		},
+		"lockdown": {
+			"pageTitle": "Shard Bot | Ajustes de Lockdown",
+			"pageDescription": "Administra a Shard desde este panel.",
+			"title": "Lockdown",
+
+			"status": "Estado:",
+			"select": "Seleccionar...",
+
+			"note": "Las entradas tienen valores máximos y mínimos, si no sigue las reglas, el valor se restablecerá al valor predeterminado.",
+			"permissionsNote": "* Algunas opciones pueden estar deshabilitadas ya que no estas en la lista de \"usuarios de confianza\"",
+
+			"whitelistUsers": "Usuarios excluidos:",
+			"whitelistUsersDesc": "Usuarios que están exentos del sistema.",
+
+			"whitelistRoles": "Roles excluidos:",
+			"whitelistRolesDesc": "Roles que están exentos del sistema.",
+
+			"whitelistChannels": "Canales excluidos:",
+			"whitelistChannelsDesc": "Canales que están exentos del sistema.",
+
+			"target": "Objetivo:",
+			"targetDesc": "El objetivo del lockdown.",
+
+			"alts": "Cuentas secundarias:",
+			"bots": "Bots",
+			"all": "Todos",
+
+			"mode": "Modo:",
+			"modeDesc": "El modo del lockdown.",
+
+			"mute": "Silenciar",
+			"kick": "Expulsar",
+			"ban": "Banear",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			},
+
+			"saveFooter": {
+				"content": "Cuidado, tienes cambios sin guardar.",
+				"save": "Guardar",
+				"reset": "Reiniciar"
+			}
+		},
+		"automod": {
+			"pageTitle": "Shard Bot | Ajusted de Auto Moderación",
+			"pageDescription": "Administra a Shard desde este panel.",
+			"title": "Auto-Mod",
+
+			"status": "Estado:",
+
+			"note": "Las entradas tienen valores máximos y mínimos, si no sigue las reglas, el valor se restablecerá al valor predeterminado.",
+			"permissionsNote": "* Algunas opciones pueden estar deshabilitadas ya que no estas en la lista de \"usuarios de confianza\"",
+
+			"whitelistUsers": "Usuarios excluidos:",
+			"whitelistUsersDesc": "Usuarios que están exentos del sistema.",
+
+			"whitelistRoles": "Roles excluidos:",
+			"whitelistRolesDesc": "Roles que están exentos del sistema.",
+
+			"whitelistChannels": "Canales excluidos:",
+			"whitelistChannelsDesc": "Canales que están exentos del sistema.",
+
+			"words": "Palabras:",
+			"word": "Palabra:",
+			"percent": "Porcentaje:",
+			"add": "Añadir",
+			"addNew": "Añadir una nueva palabra",
+			"noWords": "No hay palabras.",
+
+			"wordLengthAlert": "La palabra tiene que estar entre los 2 y 30 caracteres",
+
+			"wordPlaceholder": "(Entre 2 y 30 caracteres)",
+			"percentPlaceholder": "(Entre 10 y 100)",
+
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			},
+
+			"saveFooter": {
+				"content": "Cuidado, tienes cambios sin guardar.",
+				"save": "Guardar",
+				"reset": "Reiniciar"
+			}
+		}
+	}
+}

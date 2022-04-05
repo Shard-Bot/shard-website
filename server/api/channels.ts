@@ -82,4 +82,32 @@ router.post('/info', async (req, res) => {
 	}
 });
 
+router.post('/getInfo', async (req, res) => {
+	if (!req.body.server || !req.body.channels) return res.send('err-missing-params');
+	if (typeof req.body.server !== 'string' || typeof req.body.channels !== 'object') return res.send('err-invalid-params');
+
+	try {
+		let result: any = [];
+
+		let server: any = bot.guilds.cache.get(req.body.server);
+		if (!server) return res.send('err-no-server');
+
+		req.body.channels.forEach((channel: any) => {
+			let channelObject: any = server.channels.cache.get(channel);
+
+			if (channelObject && channelObject.type == 'GUILD_TEXT') {
+				result.push({
+					value: channelObject.id,
+					label: channelObject.name,
+				});
+			}
+		});
+
+		return res.send(result);
+	} catch (err) {
+		reportError(err);
+		return res.send('err-internal-error');
+	}
+});
+
 export { router };

@@ -136,8 +136,6 @@ const AntiNuker = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
-
-		console.log(response.data);
 	};
 
 	const loadUsers = (inputValue: string) => {

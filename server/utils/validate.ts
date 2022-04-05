@@ -54,7 +54,15 @@ const validateAndUpdate = (config: any) => {
 	if (config.Modules.AntiCaps.PercentTimeLimit > 3600 || config.Modules.AntiCaps.PercentTimeLimit < 5)
 		config.Modules.AntiCaps.PercentTimeLimit = 10;
 
-	if (config.Modules.AntiLinks.PercentTimeLimit < 5 || config.Modules.AntiLinks.PercentTimeLimit > 3600) config.Modules.AntiLinks.PercentTimeLimit = 10;
+	if (config.Modules.AntiLinks.PercentTimeLimit < 5 || config.Modules.AntiLinks.PercentTimeLimit > 3600)
+		config.Modules.AntiLinks.PercentTimeLimit = 10;
+
+	if (config.Modules.Automod.Words.length > 20) config.Modules.Automod.Words.splice(20, 1);
+	for (let word in config.Modules.Automod.Words) {
+		if (config.Modules.Automod.Words[word].length > 30) config.Modules.Automod.Words.splice(word, 1);
+		if (config.Modules.Automod.Words[word].Percent > 100 || config.Modules.Automod.Words[word].Percent < 10)
+			config.Modules.Automod.Words.splice(word, 1);
+	}
 
 	return new serverConfigs(config);
 };

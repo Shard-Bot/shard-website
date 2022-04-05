@@ -13,7 +13,7 @@ const getLang = (header: string | undefined) => {
 	const locales = new locale.Locales(header);
 	let bestMatch = locales.best(supported);
 
-	return supportedLangs[bestMatch.language.toString()];
+	return supportedLangs[bestMatch.language];
 };
 
 export default getLang;

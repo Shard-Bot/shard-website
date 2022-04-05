@@ -37,6 +37,12 @@ const Navbar: any = (props: { user: any; lang: any }) => {
 								<Dropdown.Item href='/'>{props.lang.home}</Dropdown.Item>
 								<Dropdown.Item href='/guide'>{props.lang.guide}</Dropdown.Item>
 								<Dropdown.Item href='/dashboard'>{props.lang.servers}</Dropdown.Item>
+								<Dropdown.Item href='https://docs.shardbot.xyz/informacion-general/terminos-de-servicio'>
+									{props.lang.tos}
+								</Dropdown.Item>
+								<Dropdown.Item href='https://docs.shardbot.xyz/informacion-general/politicas-de-privacidad'>
+									{props.lang.privacy}
+								</Dropdown.Item>
 								<Dropdown.Divider />
 								<Dropdown.Item href='/api/auth/logout'>{props.lang.logout}</Dropdown.Item>
 							</Dropdown.Menu>

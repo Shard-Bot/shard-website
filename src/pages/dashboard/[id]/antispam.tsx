@@ -51,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 let loadUsersTimer: any = null;
 let loadRolesTimer: any = null;
+let loadChannelsTimer: any = null;
 
 const AntiSpam = (props: any) => {
 	const [config, setConfig] = useState(props.server.config);
@@ -72,6 +73,11 @@ const AntiSpam = (props: any) => {
 				default: [],
 				isLoading: true,
 			},
+			antiLinks: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
 		},
 		roles: {
 			wallText: {
@@ -85,6 +91,33 @@ const AntiSpam = (props: any) => {
 				isLoading: true,
 			},
 			antiCaps: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiLinks: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+		},
+		channels: {
+			wallText: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiFlood: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiCaps: {
+				values: [],
+				default: [],
+				isLoading: true,
+			},
+			antiLinks: {
 				values: [],
 				default: [],
 				isLoading: true,
@@ -154,7 +187,7 @@ const AntiSpam = (props: any) => {
 	const loadRoles = (inputValue: string, field: string) => {
 		if (!inputValue) return;
 
-		clearTimeout(loadUsersTimer);
+		clearTimeout(loadRolesTimer);
 		setSelectOptions({
 			...selectOptions,
 			roles: {
@@ -199,6 +232,64 @@ const AntiSpam = (props: any) => {
 					...selectOptions.roles,
 					[field]: {
 						...selectOptions.roles[field],
+						// @ts-ignore
+						values: values,
+						isLoading: false,
+					},
+				},
+			});
+		}, 2000);
+	};
+
+	const loadChannels = (inputValue: string, field: string) => {
+		if (!inputValue) return;
+
+		clearTimeout(loadChannelsTimer);
+
+		setSelectOptions({
+			...selectOptions,
+			channels: {
+				...selectOptions.channels,
+				[field]: {
+					...selectOptions.channels[field],
+					isLoading: true,
+				},
+			},
+		});
+
+		loadChannelsTimer = setTimeout(async () => {
+			const response = await axios({
+				method: 'post',
+				url: `/api/channels/search`,
+				headers: {},
+				data: {
+					query: inputValue,
+					server: props.server.info.id,
+				},
+			});
+
+			let values = [];
+			for (let i = 0; i < response.data.length; i++) {
+				values.push({
+					value: response.data[i].id,
+					label: response.data[i].name,
+				});
+			}
+
+			for (let i = 0; i < selectOptions.channels[field].default.length; i++) {
+				for (let j = 0; j < values.length; j++) {
+					if (selectOptions.channels[field].default[i].value == values[j].value) {
+						values.splice(j, 1);
+					}
+				}
+			}
+
+			setSelectOptions({
+				...selectOptions,
+				channels: {
+					...selectOptions.channels,
+					[field]: {
+						...selectOptions.channels[field],
 						// @ts-ignore
 						values: values,
 						isLoading: false,
@@ -274,28 +365,17 @@ const AntiSpam = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
-
-		console.log(response.data);
 	};
 
 	useEffect(() => {
 		const getInfo = async () => {
+			// Users
 			const wallTextWhiteListedUsers = await axios({
 				method: 'post',
 				url: `/api/users/getInfo`,
 				headers: {},
 				data: {
 					users: props.server.config.Modules.AntiWallText.Whitelist.Users,
-					server: props.server.info.id,
-				},
-			});
-
-			const wallTextWhiteListedRoles = await axios({
-				method: 'post',
-				url: `/api/roles/getInfo`,
-				headers: {},
-				data: {
-					roles: props.server.config.Modules.AntiWallText.Whitelist.Roles,
 					server: props.server.info.id,
 				},
 			});
@@ -310,12 +390,12 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
-			const floodWhiteListedRoles = await axios({
+			const linksWhiteListedUsers = await axios({
 				method: 'post',
-				url: `/api/roles/getInfo`,
+				url: `/api/users/getInfo`,
 				headers: {},
 				data: {
-					roles: props.server.config.Modules.AntiFlood.Whitelist.Roles,
+					users: props.server.config.Modules.AntiLinks.Whitelist.Users,
 					server: props.server.info.id,
 				},
 			});
@@ -330,12 +410,84 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			// Roles
+			const wallTextWhiteListedRoles = await axios({
+				method: 'post',
+				url: `/api/roles/getInfo`,
+				headers: {},
+				data: {
+					roles: props.server.config.Modules.AntiWallText.Whitelist.Roles,
+					server: props.server.info.id,
+				},
+			});
+
+			const floodWhiteListedRoles = await axios({
+				method: 'post',
+				url: `/api/roles/getInfo`,
+				headers: {},
+				data: {
+					roles: props.server.config.Modules.AntiFlood.Whitelist.Roles,
+					server: props.server.info.id,
+				},
+			});
+
 			const capsWhiteListedRoles = await axios({
 				method: 'post',
 				url: `/api/roles/getInfo`,
 				headers: {},
 				data: {
 					roles: props.server.config.Modules.AntiCaps.Whitelist.Roles,
+					server: props.server.info.id,
+				},
+			});
+
+			const linksWhiteListedRoles = await axios({
+				method: 'post',
+				url: `/api/roles/getInfo`,
+				headers: {},
+				data: {
+					roles: props.server.config.Modules.AntiLinks.Whitelist.Roles,
+					server: props.server.info.id,
+				},
+			});
+
+			// Channels
+			const wallTextWhiteListedChannels = await axios({
+				method: 'post',
+				url: `/api/channels/getInfo`,
+				headers: {},
+				data: {
+					channels: props.server.config.Modules.AntiWallText.Whitelist.Channels,
+					server: props.server.info.id,
+				},
+			});
+
+			const floodWhiteListedChannels = await axios({
+				method: 'post',
+				url: `/api/channels/getInfo`,
+				headers: {},
+				data: {
+					channels: props.server.config.Modules.AntiFlood.Whitelist.Channels,
+					server: props.server.info.id,
+				},
+			});
+
+			const capsWhiteListedChannels = await axios({
+				method: 'post',
+				url: `/api/channels/getInfo`,
+				headers: {},
+				data: {
+					channels: props.server.config.Modules.AntiCaps.Whitelist.Channels,
+					server: props.server.info.id,
+				},
+			});
+
+			const linksWhiteListedChannels = await axios({
+				method: 'post',
+				url: `/api/channels/getInfo`,
+				headers: {},
+				data: {
+					channels: props.server.config.Modules.AntiLinks.Whitelist.Channels,
 					server: props.server.info.id,
 				},
 			});
@@ -374,6 +526,16 @@ const AntiSpam = (props: any) => {
 						}),
 						isLoading: false,
 					},
+					antiLinks: {
+						...selectOptions.users.antiLinks,
+						default: linksWhiteListedUsers.data.map((user) => {
+							return {
+								value: user.id,
+								label: `${user.username}#${user.discriminator}`,
+							};
+						}),
+						isLoading: false,
+					},
 				},
 				roles: {
 					...selectOptions.roles,
@@ -390,6 +552,34 @@ const AntiSpam = (props: any) => {
 					antiCaps: {
 						...selectOptions.roles.antiCaps,
 						default: capsWhiteListedRoles.data,
+						isLoading: false,
+					},
+					antiLinks: {
+						...selectOptions.roles.antiLinks,
+						default: linksWhiteListedRoles.data,
+						isLoading: false,
+					},
+				},
+				channels: {
+					...selectOptions.channels,
+					wallText: {
+						...selectOptions.channels.wallText,
+						default: wallTextWhiteListedChannels.data,
+						isLoading: false,
+					},
+					antiFlood: {
+						...selectOptions.channels.antiFlood,
+						default: floodWhiteListedChannels.data,
+						isLoading: false,
+					},
+					antiCaps: {
+						...selectOptions.channels.antiCaps,
+						default: capsWhiteListedChannels.data,
+						isLoading: false,
+					},
+					antiLinks: {
+						...selectOptions.channels.antiLinks,
+						default: linksWhiteListedChannels.data,
 						isLoading: false,
 					},
 				},
@@ -434,6 +624,7 @@ const AntiSpam = (props: any) => {
 					<p>{props.lang.title}</p>
 				</Container>
 
+				{/* AntiWallText */}
 				<Container>
 					<h1>{props.lang.textWalls}</h1>
 					<Row sm={1} xs={1} md={2}>
@@ -483,6 +674,30 @@ const AntiSpam = (props: any) => {
 											AntiWallText: {
 												...config.Modules.AntiWallText,
 												PercentTimeLimit: parseInt(e.target.value),
+											},
+										},
+									});
+								}}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.charLimit} <HelpTooltip body={props.lang.wallTextLimitDesc} />
+							</h5>
+							<input
+								type='number'
+								placeholder={props.lang.wallTextLimitPlaceholder}
+								value={config.Modules.AntiWallText.Limit}
+								disabled={!isOwnerOrTrusted}
+								onChange={(e) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiWallText: {
+												...config.Modules.AntiWallText,
+												Limit: parseInt(e.target.value),
 											},
 										},
 									});
@@ -584,11 +799,62 @@ const AntiSpam = (props: any) => {
 								styles={selectStyles}
 								placeholder={props.lang.select}
 							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistChannels} <HelpTooltip body={props.lang.whitelistChannelsDesc} />
+							</h5>
+							<Select
+								options={selectOptions.channels.wallText.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiWallText: {
+												...config.Modules.AntiWallText,
+												Whitelist: {
+													...config.Modules.AntiWallText.Whitelist,
+													Channels: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											wallText: {
+												...selectOptions.channels.wallText,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.channels.wallText.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadChannels(inputValue, 'wallText');
+								}}
+								value={selectOptions.channels.wallText.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
 						</Col>
 					</Row>
 				</Container>
 				<br />
 				<br />
+
+				{/* AntiFlood */}
 				<Container>
 					<h1>{props.lang.flood}</h1>
 					<Row sm={1} xs={1} md={2}>
@@ -763,11 +1029,62 @@ const AntiSpam = (props: any) => {
 								styles={selectStyles}
 								placeholder={props.lang.select}
 							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistChannels} <HelpTooltip body={props.lang.whitelistChannelsDesc} />
+							</h5>
+							<Select
+								options={selectOptions.channels.antiFlood.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiFlood: {
+												...config.Modules.AntiFlood,
+												Whitelist: {
+													...config.Modules.AntiFlood.Whitelist,
+													Channels: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											antiFlood: {
+												...selectOptions.channels.antiFlood,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.channels.antiFlood.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadChannels(inputValue, 'antiFlood');
+								}}
+								value={selectOptions.channels.antiFlood.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
 						</Col>
 					</Row>
 				</Container>
 				<br />
 				<br />
+
+				{/* AntiCap */}
 				<Container>
 					<h1>{props.lang.caps}</h1>
 					<Row sm={1} xs={1} md={2}>
@@ -841,6 +1158,30 @@ const AntiSpam = (props: any) => {
 											AntiCaps: {
 												...config.Modules.AntiCaps,
 												PercentTimeLimit: parseInt(e.target.value),
+											},
+										},
+									});
+								}}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.charLimit} <HelpTooltip body={props.lang.capsLimitDesc} />
+							</h5>
+							<input
+								type='number'
+								placeholder={props.lang.capsLimitPlaceholder}
+								value={config.Modules.AntiCaps.Limit}
+								disabled={!isOwnerOrTrusted}
+								onChange={(e) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												Limit: parseInt(e.target.value),
 											},
 										},
 									});
@@ -939,6 +1280,269 @@ const AntiSpam = (props: any) => {
 									loadRoles(inputValue, 'antiCaps');
 								}}
 								value={selectOptions.roles.antiCaps.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistChannels} <HelpTooltip body={props.lang.whitelistChannelsDesc} />
+							</h5>
+							<Select
+								options={selectOptions.channels.antiCaps.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiCaps: {
+												...config.Modules.AntiCaps,
+												Whitelist: {
+													...config.Modules.AntiCaps.Whitelist,
+													Channels: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											antiCaps: {
+												...selectOptions.channels.antiCaps,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.channels.antiCaps.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadChannels(inputValue, 'antiCaps');
+								}}
+								value={selectOptions.channels.antiCaps.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+						</Col>
+					</Row>
+				</Container>
+				<br />
+				<br />
+
+				{/* AntiLinks */}
+				<Container>
+					<h1>{props.lang.links}</h1>
+					<Row sm={1} xs={1} md={2}>
+						<Col>
+							<h5>{props.lang.status}</h5>
+							<Switch
+								checked={config.Modules.AntiLinks.Enabled}
+								disabled={!isOwnerOrTrusted}
+								onChange={() => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiLinks: {
+												...config.Modules.AntiLinks,
+												Enabled: !config.Modules.AntiLinks.Enabled,
+											},
+										},
+									});
+								}}
+								onColor='#86d3ff'
+								onHandleColor='#2693e6'
+								handleDiameter={30}
+								uncheckedIcon={false}
+								checkedIcon={false}
+								boxShadow='0px 1px 5px rgba(0, 0, 0, 0.6)'
+								activeBoxShadow='0px 0px 1px 10px rgba(0, 0, 0, 0.2)'
+								height={20}
+								width={48}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.allowImages} <HelpTooltip body={props.lang.allowImagesDesc} />
+							</h5>
+							<Switch
+								checked={config.Modules.AntiLinks.AllowImages}
+								disabled={!isOwnerOrTrusted}
+								onChange={() => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiLinks: {
+												...config.Modules.AntiLinks,
+												AllowImages: !config.Modules.AntiLinks.AllowImages,
+											},
+										},
+									});
+								}}
+								onColor='#86d3ff'
+								onHandleColor='#2693e6'
+								handleDiameter={30}
+								uncheckedIcon={false}
+								checkedIcon={false}
+								boxShadow='0px 1px 5px rgba(0, 0, 0, 0.6)'
+								activeBoxShadow='0px 0px 1px 10px rgba(0, 0, 0, 0.2)'
+								height={20}
+								width={48}
+							/>
+						</Col>
+
+						<Col className={styles['right-container']}>
+							<h5>
+								{props.lang.whitelistUsers} <HelpTooltip body={props.lang.whitelistUsersDesc} />
+							</h5>
+							<Select
+								options={selectOptions.users.antiLinks.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiLinks: {
+												...config.Modules.AntiLinks,
+												Whitelist: {
+													...config.Modules.AntiLinks.Whitelist,
+													Users: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										users: {
+											...selectOptions.users,
+											antiLinks: {
+												...selectOptions.users.antiLinks,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.users.antiLinks.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadUsers(inputValue, 'antiLinks');
+								}}
+								value={selectOptions.users.antiLinks.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistRoles} <HelpTooltip body={props.lang.whitelistRolesDesc} />
+							</h5>
+							<Select
+								options={selectOptions.roles.antiLinks.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiLinks: {
+												...config.Modules.AntiLinks,
+												Whitelist: {
+													...config.Modules.AntiLinks.Whitelist,
+													Roles: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										roles: {
+											...selectOptions.roles,
+											antiLinks: {
+												...selectOptions.roles.antiLinks,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.roles.antiCaps.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadRoles(inputValue, 'antiCaps');
+								}}
+								value={selectOptions.roles.antiCaps.default}
+								styles={selectStyles}
+								placeholder={props.lang.select}
+							/>
+
+							<br />
+							<br />
+							<h5>
+								{props.lang.whitelistChannels} <HelpTooltip body={props.lang.whitelistChannelsDesc} />
+							</h5>
+							<Select
+								options={selectOptions.channels.antiLinks.values}
+								isDisabled={!isOwnerOrTrusted}
+								onChange={(value) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											AntiLinks: {
+												...config.Modules.AntiLinks,
+												Whitelist: {
+													...config.Modules.AntiLinks.Whitelist,
+													Channels: value.map((v) => v.value),
+												},
+											},
+										},
+									});
+
+									setSelectOptions({
+										...selectOptions,
+										channels: {
+											...selectOptions.channels,
+											antiLinks: {
+												...selectOptions.channels.antiLinks,
+												// @ts-ignore
+												default: value,
+											},
+										},
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								isLoading={selectOptions.channels.antiLinks.isLoading}
+								isMulti={true}
+								onInputChange={(inputValue) => {
+									loadChannels(inputValue, 'antiLinks');
+								}}
+								value={selectOptions.channels.antiLinks.default}
 								styles={selectStyles}
 								placeholder={props.lang.select}
 							/>

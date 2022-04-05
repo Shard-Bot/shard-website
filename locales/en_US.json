@@ -5,6 +5,8 @@
 			"pageDescription": "Shard Bot is a Discord bot that allows you to manage your Discord server.",
 
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"invite": "Invite",
 				"support": "Support",
 				"login": "Login",
@@ -36,7 +38,11 @@
 
 				"loggingTitle": "Logging",
 				"loggingDescription": "Be aware of what's happening on your server with Shard's logging system."
-			}
+			},
+
+			"copyright": "Copyright © 2021 Shard Development Team",
+			"tos": "Terms of Service",
+			"privacy": "Privacy Policy"
 		},
 		"servers": {
 			"pageTitle": "Shard Bot | Servers",
@@ -48,6 +54,8 @@
 			"noServer": "Don't see your server? & and log in again",
 
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
@@ -79,6 +87,8 @@
 			},
 
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
@@ -122,6 +132,8 @@
 			"notFound": "Not Found",
 
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
@@ -142,6 +154,9 @@
 			"textWalls": "Anti Text Walls",
 			"flood": "Anti Flood",
 			"caps": "Anti Caps",
+			"links": "Links",
+			"allowImages": "Allow Images",
+			"allowImagesDesc": "Allows the link if the link is an image.",
 
 			"status": "Status:",
 			"charLimit": "Character Limit:",
@@ -157,13 +172,24 @@
 			"percentageDesc": "How much the percentage should increase (every time the action triggers) before punishing a user (When it reaches 100%, the user will be punished)",
 			"percentagePlaceholder": "Enter a percentage (between 20 and 100)",
 
+			"wallTextLimitDesc": "The maximum amount of characters a user can use in a single message.",
+			"wallTextLimitPlaceholder": "Enter a number (between 30 and 4000)",
+
+			"capsLimitDesc": "The maximum amount of caps a user can use in a single message.",
+			"capsLimitPlaceholder": "Enter a number (between 5 and 4000)",
+
 			"whitelistUsers": "Whitelisted Users:",
 			"whitelistUsersDesc": "Users that are exempt from the system",
 
 			"whitelistRoles": "Whitelisted Roles:",
 			"whitelistRolesDesc": "Roles that are exempt from the system",
 
+			"whitelistChannels": "Whitelisted Channels:",
+			"whitelistChannelsDesc": "Channels that are exempt from the system",
+
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
@@ -226,6 +252,8 @@
 			"modulesPlaceholders": "Limit (between 2 and 10)",
 
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
@@ -255,6 +283,9 @@
 			"whitelistRoles": "Whitelisted Roles:",
 			"whitelistRolesDesc": "Roles that are exempt from the system",
 
+			"whitelistChannels": "Whitelisted Channels:",
+			"whitelistChannelsDesc": "Channels that are exempt from the system",
+
 			"target": "Target:",
 			"targetDesc": "The target of the lockdown",
 
@@ -270,6 +301,8 @@
 			"ban": "Ban",
 
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
@@ -298,7 +331,24 @@
 			"whitelistRoles": "Whitelisted Roles:",
 			"whitelistRolesDesc": "Roles that are exempt from the system",
 
+			"whitelistChannels": "Whitelisted Channels:",
+			"whitelistChannelsDesc": "Channels that are exempt from the system",
+
+			"words": "Words:",
+			"word": "Word:",
+			"percent": "Percent:",
+			"add": "Add",
+			"addNew": "Add a new word",
+			"noWords": "No words",
+
+			"wordLengthAlert": "The word must be between 2 and 30 characters",
+
+			"wordPlaceholder": "(Between 2 and 30 characters)",
+			"percentPlaceholder": "(Between 10 and 100)",
+
 			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
 				"logout": "Logout",
 				"servers": "Manage Servers",
 				"home": "Home",
