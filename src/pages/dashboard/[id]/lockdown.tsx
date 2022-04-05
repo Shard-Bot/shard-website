@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 	const content = await axios({
 		method: 'get',
-		url: `${process.env.HOST}/api/content/dashboard?page=antinuker`,
+		url: `${process.env.HOST}/api/content/dashboard?page=lockdown`,
 		headers: context.req.headers,
 	});
 
@@ -49,6 +49,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	};
 };
 
+let loadUsersTimer: any = null;
+let loadRolesTimer: any = null;
+
 const AntiNuker = (props: any) => {
 	const [config, setConfig] = useState(props.server.config);
 	const [unsavedChanges, setUnsavedChanges] = useState(false);
@@ -66,6 +69,59 @@ const AntiNuker = (props: any) => {
 	});
 
 	const isOwnerOrTrusted = config.Users.Trusted.includes(props.user.id) || props.server.ownerID == props.user.id;
+
+	const selectStyles = {
+		control: (base: any, _state: any) => ({
+			...base,
+			backgroundColor: '#1d2126',
+			color: '#fff',
+			border: 'none',
+			width: '80%',
+		}),
+		option: (base: any, state: any) => ({
+			...base,
+			backgroundColor: state.isFocused ? '#1a1e24 ' : '#1d2126',
+			color: '#FFF',
+			transition: 'all 0.2s ease-in-out',
+			padding: '10px',
+		}),
+		singleValue: (base: any, _state: any) => ({
+			...base,
+			color: '#FFF',
+		}),
+		placeholder: (base: any, state: any) => ({
+			...base,
+			color: state.isDisabled ? '#565656' : '#ccc',
+		}),
+		multiValue: (base: any, _state: any) => ({
+			...base,
+			color: '#FFF',
+			backgroundColor: '#282c34',
+		}),
+		multiValueLabel: (base: any, _state: any) => ({
+			...base,
+			color: '#FFF',
+		}),
+		input: (base: any, _state: any) => ({
+			...base,
+			color: '#FFF',
+		}),
+		multiValueRemove: (base: any, _state: any) => ({
+			...base,
+			transition: 'all 0.2s ease-in-out',
+			color: '#FFF',
+			':hover': {
+				color: '#FFF',
+				backgroundColor: '#ef5859',
+			},
+			border: 'none',
+		}),
+		menu: (base: any, _state: any) => ({
+			...base,
+			width: '80%',
+			backgroundColor: '#1a1e24',
+		}),
+	};
 
 	const saveChanges = async () => {
 		setUnsavedChanges(false);
@@ -124,15 +180,15 @@ const AntiNuker = (props: any) => {
 						<Col>
 							<h5>{props.lang.status}</h5>
 							<Switch
-								checked={config.Modules.AntiNuker.Enabled}
+								checked={config.Modules.Lockdown.Enabled}
 								onChange={() => {
 									setConfig({
 										...config,
 										Modules: {
 											...config.Modules,
-											AntiNuker: {
-												...config.Modules.AntiNuker,
-												Enabled: !config.Modules.AntiNuker.Enabled,
+											Lockdown: {
+												...config.Modules.Lockdown,
+												Enabled: !config.Modules.Lockdown.Enabled,
 											},
 										},
 									});
@@ -151,9 +207,73 @@ const AntiNuker = (props: any) => {
 
 							<br />
 							<br />
+
+							<h5>
+								{props.lang.target} <HelpTooltip body={props.lang.targetDesc} />
+							</h5>
+							<Select
+								styles={selectStyles}
+								isDisabled={!isOwnerOrTrusted}
+								defaultValue={{ value: config.Modules.Lockdown.Target, label: props.lang[config.Modules.Lockdown.Target] }}
+								placeholder={props.lang.select}
+								options={[
+									{ value: 'alts', label: props.lang.alts },
+									{ value: 'bots', label: props.lang.bots },
+									{ value: 'all', label: props.lang.all },
+								]}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								onChange={(value: any) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											Lockdown: {
+												...config.Modules.Lockdown,
+												Target: value.value,
+											},
+										},
+									});
+								}}
+							/>
+
+							<br />
+							<br />
+
+							<h5>
+								{props.lang.mode} <HelpTooltip body={props.lang.modeDesc} />
+							</h5>
+							<Select
+								styles={selectStyles}
+								isDisabled={!isOwnerOrTrusted}
+								defaultValue={{ value: config.Modules.Lockdown.Mode, label: props.lang[config.Modules.Lockdown.Mode] }}
+								placeholder={props.lang.select}
+								options={[
+									{ value: 'kick', label: props.lang.kick },
+									{ value: 'ban', label: props.lang.ban },
+									{ value: 'mute', label: props.lang.mute },
+								]}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+								}}
+								onChange={(value: any) => {
+									setConfig({
+										...config,
+										Modules: {
+											...config.Modules,
+											Lockdown: {
+												...config.Modules.Lockdown,
+												Mode: value.value,
+											},
+										},
+									});
+								}}
+							/>
 						</Col>
 					</Row>
-
 					<br />
 					<br />
 					{props.lang.note} <br />

@@ -304,6 +304,26 @@ const AutoMod = (props: any) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [config]);
 
+	const wordList = config.Modules.Automod.Words.map((word: any) => {
+		let key = word.word;
+
+		return (
+			<div key={key}>
+				<p>{word.Word}</p>
+			</div>
+		);
+	});
+
+	const percentList = config.Modules.Automod.Words.map((word: any) => {
+		let key = (Math.random() * 1000).toString();
+
+		return (
+			<div key={key}>
+				<p>{word.Percent}%</p>
+			</div>
+		);
+	});
+
 	return (
 		<div className={styles['dashboard-automod']}>
 			<Navbar user={props.user} lang={props.lang.navbar} />
@@ -355,6 +375,20 @@ const AutoMod = (props: any) => {
 
 							<br />
 							<br />
+							<Row sm={2}>
+								<Col>
+									<Row>
+										<Col>
+											Words <br />
+											{wordList}
+										</Col>
+										<Col>
+											Percent <br />
+											{percentList}
+										</Col>
+									</Row>
+								</Col>
+							</Row>
 						</Col>
 						<Col>
 							<h5>

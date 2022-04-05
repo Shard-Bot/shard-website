@@ -238,7 +238,50 @@
 				"reset": "Reset"
 			}
 		},
-		"lockdown": {},
+		"lockdown": {
+			"pageTitle": "Shard Bot | Lockdown Settings",
+			"pageDescription": "Manage Shard Bot from this panel.",
+			"title": "Lockdown",
+
+			"status": "Status:",
+			"select": "Select...",
+
+			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
+			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",
+
+			"whitelistUsers": "Whitelisted Users:",
+			"whitelistUsersDesc": "Users that are exempt from the system",
+
+			"whitelistRoles": "Whitelisted Roles:",
+			"whitelistRolesDesc": "Roles that are exempt from the system",
+
+			"target": "Target:",
+			"targetDesc": "The target of the lockdown",
+
+			"alts": "Alts",
+			"bots": "Bots",
+			"all": "All",
+
+			"mode": "Mode:",
+			"modeDesc": "The mode of the lockdown",
+
+			"mute": "Mute",
+			"kick": "Kick",
+			"ban": "Ban",
+
+			"navbar": {
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			},
+
+			"saveFooter": {
+				"content": "Careful, you have unsaved changes.",
+				"save": "Save",
+				"reset": "Reset"
+			}
+		},
 		"automod": {
 			"pageTitle": "Shard Bot | Auto-Mod Settings",
 			"pageDescription": "Manage Shard Bot from this panel.",

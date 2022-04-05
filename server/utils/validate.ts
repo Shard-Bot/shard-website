@@ -30,9 +30,9 @@ const validateAndUpdate = (config: any) => {
 	if (config.Modules.AntiNuker.Config.maxUnbans.Limit > 10 || config.Modules.AntiNuker.Config.maxUnbans.Limit < 2)
 		config.Modules.AntiNuker.Config.maxUnbans.Limit = 5;
 
-	if (config.Modules.Lockdown.Mode !== 'mute' || config.Modules.Lockdown.Mode !== 'ban' || config.Modules.Lockdown.Mode !== 'kick')
+	if (config.Modules.Lockdown.Mode !== 'mute' && config.Modules.Lockdown.Mode !== 'ban' && config.Modules.Lockdown.Mode !== 'kick')
 		config.Modules.Lockdown.Mode = 'mute';
-	if (config.Modules.Lockdown.Target !== 'alts' || config.Modules.Lockdown.Target !== 'bots' || config.Modules.Lockdown.Target !== 'all')
+	if (config.Modules.Lockdown.Target !== 'alts' && config.Modules.Lockdown.Target !== 'bots' && config.Modules.Lockdown.Target !== 'all')
 		config.Modules.Lockdown.Target = 'alts';
 
 	if (config.Modules.Automod.PercentTimeLimit > 3600 || config.Modules.Automod.PercentTimeLimit < 5)
