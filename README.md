@@ -1,34 +1,102 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## **Shard Bot Website**
 
-## Getting Started
+<br>
 
-First, run the development server:
+# Features:
+-   Login Using Discord's OAuth
+-   Several API Utilities  
+-   Edit Shard's Bot Configuration Through A Web Interface
+-   Search Result Optimization (SEO)
 
-```bash
-npm run dev
-# or
-yarn dev
+<br>
+<br>
+
+# Setup:
+For this setup you will require the following:
+-   A Discord Bot Account.
+-   Latest version of Node.js.
+-   Git (for cloning the repository).
+-   A Browser with Javascript enabled.
+-   At least 1GB of free space and memory.
+-   Internet Connection.
+
+<br>
+
+Step 1: Clone the repository and cd into the directory.
+```shell
+$ git clone https://github.com/Shard-Bot/shard-website.git shard-website
+$ cd ./shard-website/
+```
+<br>
+
+Step 2: Install the dependencies
+```shell
+$ npm install --save
+```
+<br>
+
+Step 3: Create the .env file, copy the next lines and paste them into the file, change the values to your own.
+
+```js
+PORT="Your port number"
+HOST="The Base URL of the Website, example: http://localhost:3000"
+MONGODB_URI="The URI of your MongoDB Database"
+
+SESSION_SECRET="Your secret key to encrypt the sessions, could be anything"
+
+CLIENT_ID="Your Discord Client ID"
+CLIENT_SECRET="Your Discord Client Secret"
+
+ERROR_LOG_TOKEN="A webhook token to send errors to a webhook"
+ERROR_LOG_CHANNEL="The channel to send errors to (must be the same as the webhook channel)"
+
+TOKEN="Your bot token"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br>
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Step 4: Run the server.
+```shell
+$  npm start
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+This will automatically compile the site and start it,
+If you present any issues, please contact me on Discord.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<br>
+<br>
 
-## Learn More
+# Acknowledgements:
+-   [Node.js](https://nodejs.org/): Used for the server.
+-   [Express.js](https://expressjs.com/): Used for the web server.
+-   [Next.js](https://nextjs.org/): Used for the front-end interface and routing.
+-   [TypeScript](https://www.typescriptlang.org/): Language used for the server and front-end.
+-   [Quick.DB](https://quick.db/): Used for caching and session storage.
+-   [MongoDB](https://www.mongodb.com/): Used for the database.
+-   [SCSS](https://sass-lang.com/): Used for the styling.
+-   [Discord.js](https://discord.js.org/): Used for Discord's OAuth and to get information from Discord.
+-   [Github](https://github.com): Used for the website's version management.
+-   [Git](https://git-scm.com/): Used for the website's version management.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br>
+<br>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Extra Information: 
 
-## Deploy on Vercel
+Author: [Asterki#1765](https://twitter.com/AsterkiDev) <br>
+Any Bugs or Issues can be reported [here](https://github.com/Shard-Bot/shardmod/issues). <br>
+**This code is provided only with the guarantee of bug fixes for features that already exist, charges will apply if there are new implementations or removals of such.**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<br>
+<br>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# License:
+
+Copyright © 2022 <Asterki 2020-2022>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

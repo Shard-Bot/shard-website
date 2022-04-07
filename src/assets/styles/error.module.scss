@@ -1,0 +1,61 @@
+.page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-family: 'Inter';
+	color: #fff;
+	background-color: #282c34;
+
+	main {
+		margin-top: 10vh;
+		margin-bottom: 15vh;
+
+		padding: 20px;
+		width: 75vw;
+		background-color: #21252b;
+		border-radius: 10px;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+
+		p,
+		h1,
+		a {
+			text-align: center;
+		}
+
+		p {
+			font-size: 1.5rem;
+		}
+
+		h1 {
+			font-size: 7rem;
+		}
+
+		a {
+			color: #fff;
+			text-decoration: none;
+		}
+	}
+}
+
+// Mobile View
+@media screen and (max-width: 768px) {
+	.page {
+		main {
+			width: 90vw;
+			box-shadow: none !important;
+
+			p {
+				font-size: 1.2rem;
+			}
+	
+			h1 {
+				font-size: 30px;
+			}
+
+			a {
+				margin-top: 300px;
+			}
+		}
+	}
+}

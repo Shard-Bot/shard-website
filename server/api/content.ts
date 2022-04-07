@@ -35,6 +35,10 @@ router.get('/main/', (req: express.Request, res: express.Response) => {
 				session: sessions.get(`${req.user.id}_${req.user.sessionID}`),
 			});
 			break;
+
+		case 'error':
+			res.status(200).send({ lang: getLang(req.headers['accept-language']).main.error });
+			break;
 	}
 });
 

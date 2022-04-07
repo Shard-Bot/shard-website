@@ -40,6 +40,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		},
 	});
 
+	if (server.data == "500") return {
+		redirect: {
+			destination: '/error/?code=500',
+			permanent: false,
+		},
+	}
+
 	return {
 		props: {
 			lang: content.data.lang,
@@ -136,6 +143,8 @@ const AntiNuker = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
+
+		if (response.data == "500") return window.location.href = '/error/?code=500';
 	};
 
 	const loadUsers = (inputValue: string) => {
@@ -160,6 +169,8 @@ const AntiNuker = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (response.data == "500") return window.location.href = '/error/?code=500';
 
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
@@ -212,6 +223,8 @@ const AntiNuker = (props: any) => {
 				},
 			});
 
+			if (response.data == "500") return window.location.href = '/error/?code=500';
+
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
 				values.push({
@@ -252,6 +265,8 @@ const AntiNuker = (props: any) => {
 				},
 			});
 
+			if (whiteListedUsers.data == "500") return window.location.href = '/error/?code=500';
+
 			const whiteListedRoles = await axios({
 				method: 'post',
 				url: `/api/roles/getInfo`,
@@ -261,6 +276,8 @@ const AntiNuker = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (whiteListedRoles.data == "500") return window.location.href = '/error/?code=500';
 
 			setSelectOptions({
 				...selectOptions,

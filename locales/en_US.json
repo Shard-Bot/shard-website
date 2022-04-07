@@ -61,6 +61,25 @@
 				"home": "Home",
 				"guide": "Guide"
 			}
+		},
+		"error": {
+			"pageTitle": "Shard Bot | Error",
+			"pageDescription": "An error has occurred.",
+
+			"error": "An error code & has occurred. & Go back to the home page.",
+
+			"navbar": {
+				"tos": "Terms of Service",
+				"privacy": "Privacy Policy",
+				"invite": "Invite",
+				"support": "Support",
+				"login": "Login",
+
+				"logout": "Logout",
+				"servers": "Manage Servers",
+				"home": "Home",
+				"guide": "Guide"
+			}
 		}
 	},
 	"dashboard": {

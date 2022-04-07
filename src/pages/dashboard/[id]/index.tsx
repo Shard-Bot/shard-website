@@ -36,6 +36,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		},
 	});
 
+	if (server.data == "500") return {
+		redirect: {
+			destination: '/error/?code=500',
+			permanent: false,
+		},
+	}
+
 	return {
 		props: {
 			lang: content.data.lang,

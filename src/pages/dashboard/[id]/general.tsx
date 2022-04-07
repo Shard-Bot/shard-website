@@ -41,6 +41,14 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		},
 	});
 
+	if (server.data == '500')
+		return {
+			redirect: {
+				destination: '/error/?code=500',
+				permanent: false,
+			},
+		};
+
 	return {
 		props: {
 			lang: content.data.lang,
@@ -131,6 +139,8 @@ const DashboardGeneral: NextPage = (props: any) => {
 				},
 			});
 
+			if (response.data == '500') return (window.location.href = '/error/?code=500');
+
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
 				values.push({
@@ -185,6 +195,8 @@ const DashboardGeneral: NextPage = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (response.data == '500') return (window.location.href = '/error/?code=500');
 
 			let values = response.data.map((channel: discord.GuildChannel) => {
 				return {
@@ -274,6 +286,8 @@ const DashboardGeneral: NextPage = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
+
+		if (response.data == '500') return (window.location.href = '/error/?code=500');
 	};
 
 	useEffect(() => {
@@ -288,6 +302,8 @@ const DashboardGeneral: NextPage = (props: any) => {
 				},
 			});
 
+			if (trustedResult.data == '500') return (window.location.href = '/error/?code=500');
+
 			const channelResult = await axios({
 				method: 'post',
 				url: `/api/channels/info`,
@@ -301,6 +317,8 @@ const DashboardGeneral: NextPage = (props: any) => {
 					],
 				},
 			});
+
+			if (channelResult.data == '500') return (window.location.href = '/error/?code=500');
 
 			setSelectOptions({
 				...selectOptions,
@@ -455,7 +473,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 
-							<h2>{props.lang.channels.bot} <HelpTooltip body={props.lang.tooltips.bot} /></h2>
+							<h2>
+								{props.lang.channels.bot} <HelpTooltip body={props.lang.tooltips.bot} />
+							</h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.BotLog.isLoading}
@@ -490,7 +510,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							/>
 						</Col>
 						<Col className={styles['right-container']}>
-							<h2>{props.lang.channels.join} <HelpTooltip body={props.lang.tooltips.join} /></h2>
+							<h2>
+								{props.lang.channels.join} <HelpTooltip body={props.lang.tooltips.join} />
+							</h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.JoinLog.isLoading}
@@ -528,7 +550,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 
-							<h2>{props.lang.channels.exit} <HelpTooltip body={props.lang.tooltips.exit} /></h2>
+							<h2>
+								{props.lang.channels.exit} <HelpTooltip body={props.lang.tooltips.exit} />
+							</h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.ExitLog.isLoading}
@@ -566,7 +590,9 @@ const DashboardGeneral: NextPage = (props: any) => {
 							<br />
 							<br />
 
-							<h2>{props.lang.channels.mod} <HelpTooltip body={props.lang.tooltips.mod} /></h2>
+							<h2>
+								{props.lang.channels.mod} <HelpTooltip body={props.lang.tooltips.mod} />
+							</h2>
 							<Select
 								styles={selectStyles}
 								isLoading={selectOptions.channels.ModLog.isLoading}

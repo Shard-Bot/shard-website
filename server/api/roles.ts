@@ -45,7 +45,7 @@ router.post('/search', (req: express.Request, res: express.Response) => {
 		return res.send(results.splice(0, 5));
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 
@@ -75,7 +75,7 @@ router.post('/getInfo', (req: express.Request, res: express.Response) => {
 		return res.send(result);
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 

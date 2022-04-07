@@ -40,6 +40,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		},
 	});
 
+	if (server.data == "500") return {
+		redirect: {
+			destination: '/error/?code=500',
+			permanent: false,
+		},
+	}
+
 	return {
 		props: {
 			lang: content.data.lang,
@@ -153,6 +160,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (response.data == "500") return window.location.href = '/error/?code=500';
+
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
 				values.push({
@@ -209,6 +218,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (response.data == "500") return window.location.href = '/error/?code=500';
 
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
@@ -267,6 +278,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (response.data == "500") return window.location.href = '/error/?code=500';
 
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
@@ -365,6 +378,8 @@ const AntiSpam = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
+
+		if (response.data == "500") return window.location.href = '/error/?code=500';
 	};
 
 	useEffect(() => {
@@ -380,6 +395,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (wallTextWhiteListedUsers.data == "500") return window.location.href = '/error/?code=500';
+			
 			const floodWhiteListedUsers = await axios({
 				method: 'post',
 				url: `/api/users/getInfo`,
@@ -389,6 +406,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (floodWhiteListedUsers.data == "500") return window.location.href = '/error/?code=500';
 
 			const linksWhiteListedUsers = await axios({
 				method: 'post',
@@ -400,6 +419,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (linksWhiteListedUsers.data == "500") return window.location.href = '/error/?code=500';
+
 			const capsWhiteListedUsers = await axios({
 				method: 'post',
 				url: `/api/users/getInfo`,
@@ -409,6 +430,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (capsWhiteListedUsers.data == "500") return window.location.href = '/error/?code=500';
 
 			// Roles
 			const wallTextWhiteListedRoles = await axios({
@@ -421,6 +444,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (wallTextWhiteListedRoles.data == "500") return window.location.href = '/error/?code=500';
+
 			const floodWhiteListedRoles = await axios({
 				method: 'post',
 				url: `/api/roles/getInfo`,
@@ -431,6 +456,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (floodWhiteListedRoles.data == "500") return window.location.href = '/error/?code=500';
+			
 			const capsWhiteListedRoles = await axios({
 				method: 'post',
 				url: `/api/roles/getInfo`,
@@ -441,6 +468,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (capsWhiteListedRoles.data == "500") return window.location.href = '/error/?code=500';
+
 			const linksWhiteListedRoles = await axios({
 				method: 'post',
 				url: `/api/roles/getInfo`,
@@ -450,6 +479,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (linksWhiteListedRoles.data == "500") return window.location.href = '/error/?code=500';
 
 			// Channels
 			const wallTextWhiteListedChannels = await axios({
@@ -462,6 +493,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (wallTextWhiteListedChannels.data == "500") return window.location.href = '/error/?code=500';
+
 			const floodWhiteListedChannels = await axios({
 				method: 'post',
 				url: `/api/channels/getInfo`,
@@ -471,6 +504,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (floodWhiteListedChannels.data == "500") return window.location.href = '/error/?code=500';
 
 			const capsWhiteListedChannels = await axios({
 				method: 'post',
@@ -482,6 +517,8 @@ const AntiSpam = (props: any) => {
 				},
 			});
 
+			if (capsWhiteListedChannels.data == "500") return window.location.href = '/error/?code=500';
+
 			const linksWhiteListedChannels = await axios({
 				method: 'post',
 				url: `/api/channels/getInfo`,
@@ -491,6 +528,8 @@ const AntiSpam = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (linksWhiteListedChannels.data == "500") return window.location.href = '/error/?code=500';
 
 			setSelectOptions({
 				...selectOptions,

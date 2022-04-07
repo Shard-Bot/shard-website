@@ -40,6 +40,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		},
 	});
 
+	if (server.data == "500") return {
+		redirect: {
+			destination: '/error/?code=500',
+			permanent: false,
+		},
+	}
+
 	return {
 		props: {
 			lang: content.data.lang,
@@ -49,24 +56,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	};
 };
 
-let loadUsersTimer: any = null;
-let loadRolesTimer: any = null;
-
-const AntiNuker = (props: any) => {
+const Lockdown = (props: any) => {
 	const [config, setConfig] = useState(props.server.config);
 	const [unsavedChanges, setUnsavedChanges] = useState(false);
-	const [selectOptions, setSelectOptions] = useState({
-		users: {
-			values: [],
-			default: [],
-			isLoading: true,
-		},
-		roles: {
-			values: [],
-			default: [],
-			isLoading: true,
-		},
-	});
 
 	const isOwnerOrTrusted = config.Users.Trusted.includes(props.user.id) || props.server.ownerID == props.user.id;
 
@@ -136,6 +128,8 @@ const AntiNuker = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
+
+		if (response.data == '500') return (window.location.href = '/error/?code=500');
 	};
 
 	useEffect(() => {
@@ -286,4 +280,4 @@ const AntiNuker = (props: any) => {
 	);
 };
 
-export default AntiNuker;
+export default Lockdown;

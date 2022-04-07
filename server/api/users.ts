@@ -53,7 +53,7 @@ router.post('/search', (req: express.Request, res: express.Response) => {
 		});
 	} catch (err) {
 		reportError(err);
-		return res.send('err-server-error');
+		return res.send('500');
 	}
 });
 
@@ -84,7 +84,7 @@ router.post('/getInfo', (req: express.Request, res: express.Response) => {
 		});
 	} catch (err) {
 		reportError(err);
-		return res.send('err-server-error');
+		return res.send('500');
 	}
 });
 

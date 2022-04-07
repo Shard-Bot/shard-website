@@ -78,7 +78,7 @@ router.post('/info', async (req, res) => {
 		return res.send(channelResult);
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 
@@ -106,7 +106,7 @@ router.post('/getInfo', async (req, res) => {
 		return res.send(result);
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 

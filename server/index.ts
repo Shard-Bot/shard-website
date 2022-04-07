@@ -10,7 +10,7 @@ let launchArgs = minimist(process.argv.slice(2), {
 	string: ['dev', 'port'],
 	default: {
 		dev: true,
-		port: 8080,
+		port: 8481,
 	},
 });
 

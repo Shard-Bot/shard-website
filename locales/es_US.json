@@ -27,7 +27,7 @@
 			},
 
 			"showcase": {
-				"automodTitle": "AutoModeración",	
+				"automodTitle": "AutoModeración",
 				"automodDescription": "Shard modera automáticamente tu servidor con eficiencia.",
 
 				"moderationTitle": "Comandos de moderación.",
@@ -56,6 +56,25 @@
 			"navbar": {
 				"tos": "Terminos de servicio",
 				"privacy": "Política de privacidad",
+				"logout": "Cerra sesión",
+				"servers": "Servidores",
+				"home": "Inicio",
+				"guide": "Guía"
+			}
+		},
+		"error": {
+			"pageTitle": "Shard Bot | Error",
+			"pageDescription": "Un error ha ocurrido.",
+
+			"error": "Un error con el código & ha ocurrido. & Ir a la página de inicio.",
+			
+			"navbar": {
+				"tos": "Terminos de servicio",
+				"privacy": "Política de privacidad",
+				"invite": "Invitar",
+				"support": "Soporte",
+				"login": "Ingresar",
+
 				"logout": "Cerra sesión",
 				"servers": "Servidores",
 				"home": "Inicio",
@@ -259,7 +278,7 @@
 				"home": "Inicio",
 				"guide": "Guía"
 			},
-            "saveFooter": {
+			"saveFooter": {
 				"content": "Cuidado, tienes cambios sin guardar.",
 				"save": "Guardar",
 				"reset": "Reiniciar"

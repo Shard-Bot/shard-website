@@ -40,6 +40,14 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 		},
 	});
 
+	if (server.data == '500')
+		return {
+			redirect: {
+				destination: '/error/?code=500',
+				permanent: false,
+			},
+		};
+
 	return {
 		props: {
 			lang: content.data.lang,
@@ -152,6 +160,8 @@ const AutoMod = (props: any) => {
 				},
 			});
 
+			if (response.data == '500') return (window.location.href = '/error/?code=500');
+
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
 				values.push({
@@ -202,6 +212,8 @@ const AutoMod = (props: any) => {
 					server: props.server.info.id,
 				},
 			});
+
+			if (response.data == '500') return (window.location.href = '/error/?code=500');
 
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
@@ -255,6 +267,8 @@ const AutoMod = (props: any) => {
 				},
 			});
 
+			if (response.data == '500') return (window.location.href = '/error/?code=500');
+
 			let values = [];
 			for (let i = 0; i < response.data.length; i++) {
 				values.push({
@@ -295,6 +309,8 @@ const AutoMod = (props: any) => {
 				server: props.server.info.id,
 			},
 		});
+
+		if (response.data == '500') return (window.location.href = '/error/?code=500');
 	};
 
 	const addWord = (word: string, percent: number) => {
@@ -327,6 +343,8 @@ const AutoMod = (props: any) => {
 				},
 			});
 
+			if (whiteListedUsers.data == '500') return (window.location.href = '/error/?code=500');
+
 			const whiteListedRoles = await axios({
 				method: 'post',
 				url: `/api/roles/getInfo`,
@@ -337,15 +355,19 @@ const AutoMod = (props: any) => {
 				},
 			});
 
+			if (whiteListedRoles.data == '500') return (window.location.href = '/error/?code=500');
+
 			const whitelistChannels = await axios({
-				method: "post",
+				method: 'post',
 				url: `/api/channels/getInfo`,
 				headers: {},
 				data: {
 					channels: props.server.config.Modules.Automod.Whitelist.Channels,
 					server: props.server.info.id,
 				},
-			})
+			});
+
+			if (whitelistChannels.data == '500') return (window.location.href = '/error/?code=500');
 
 			setSelectOptions({
 				...selectOptions,

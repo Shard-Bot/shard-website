@@ -43,7 +43,7 @@ router.get('/list', (req: express.Request, res: express.Response) => {
 		return res.send(guildsTheUserIsOn);
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 
@@ -86,7 +86,7 @@ router.get('/info', async (req: express.Request, res: express.Response) => {
 		});
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 
@@ -149,12 +149,13 @@ router.post('/save-changes', async (req: express.Request, res: express.Response)
 		let newConfig = validateAndUpdate(generatedConfig);
 
 		serverConfigs.findOneAndUpdate({ ServerID: req.body.server }, newConfig, { upsert: true }, (err, doc) => {
-			if (err) return res.send('err-internal-error');
+			if (err) return res.send('500');
+
 			return res.send('success');
 		});
 	} catch (err) {
 		reportError(err);
-		return res.send('err-internal-error');
+		return res.send('500');
 	}
 });
 

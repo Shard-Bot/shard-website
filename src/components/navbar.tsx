@@ -35,7 +35,6 @@ const Navbar: any = (props: { user: any; lang: any }) => {
 						<Fade in={open}>
 							<Dropdown.Menu className={`container ${styles.dropdown}`} align='end'>
 								<Dropdown.Item href='/'>{props.lang.home}</Dropdown.Item>
-								<Dropdown.Item href='/guide'>{props.lang.guide}</Dropdown.Item>
 								<Dropdown.Item href='/dashboard'>{props.lang.servers}</Dropdown.Item>
 								<Dropdown.Item href='https://docs.shardbot.xyz/informacion-general/terminos-de-servicio'>
 									{props.lang.tos}

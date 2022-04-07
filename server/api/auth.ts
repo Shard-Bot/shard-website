@@ -23,8 +23,8 @@ router.use(
 
 // Routes
 router.get('/login', async (req: express.Request, res: express.Response) => {
-	if (!req.query.code) return res.send({ success: false, message: 'err-missing-params' });
-	if (typeof req.query.code !== 'string') return res.send({ success: false, message: 'err-invalid-params' });
+	if (!req.query.code) return res.redirect("/error?code=400")
+	if (typeof req.query.code !== 'string') return res.redirect("/error?code=400")
 
 	let code = req.query.code;
 
@@ -38,7 +38,7 @@ router.get('/login', async (req: express.Request, res: express.Response) => {
 				client_secret: process.env.CLIENT_SECRET,
 				code,
 				grant_type: 'authorization_code',
-				redirect_uri: process.env.REDIRECT_URI,
+				redirect_uri: process.env.HOST + '/api/auth/login',
 				scope: 'identify guilds',
 			}),
 			headers: {
@@ -46,7 +46,7 @@ router.get('/login', async (req: express.Request, res: express.Response) => {
 			},
 		});
 
-		if (oauthResult.status == 400) return res.send({ success: false, message: 'err-invalid-params' });
+		if (oauthResult.status == 400) return res.redirect("/error?code=400")
 
 		let servers = await axios({
 			method: 'get',
@@ -84,7 +84,7 @@ router.get('/login', async (req: express.Request, res: express.Response) => {
 		});
 	} catch (err: any) {
 		reportError(err);
-		return res.send({ success: false, message: err.data.error_description });
+		return res.redirect("/error?code=500")
 	}
 });
 
@@ -94,7 +94,7 @@ router.get('/logout', (req: express.Request, res: express.Response) => {
 		sessions.delete(`${req.user.id}_${req.user.sessionID}`);
 
 		req.logout();
-		return res.send({ success: true, message: 'ok' });
+		return res.redirect('/');
 	} catch (err) {
 		reportError(err);
 		return res.send({ success: false, message: 'err-internal-error' });
@@ -104,7 +104,7 @@ router.get('/logout', (req: express.Request, res: express.Response) => {
 router.get('/loginRedirect', (_req: express.Request, res: express.Response) => {
 	try {
 		return res.redirect(
-			`https://discordapp.com/oauth2/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&scope=identify%20guilds`
+			`https://discordapp.com/oauth2/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.HOST + '/api/auth/login'}&response_type=code&scope=identify%20guilds`
 		);
 	} catch (err) {
 		reportError(err);
