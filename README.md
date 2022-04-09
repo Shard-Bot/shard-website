@@ -37,7 +37,7 @@ $ npm install --save
 ```
 <br>
 
-Step 3: Create the .env file, copy the next lines and paste them into the file, change the values to your own.
+Step 3: Create the .env file, copy the next lines and paste them into the file, change the values to your own, all of them are required.
 
 ```js
 PORT="Your port number"
@@ -49,8 +49,8 @@ SESSION_SECRET="A random string to encrypt the sessions"
 CLIENT_ID="Your Discord Client ID"
 CLIENT_SECRET="Your Discord Client Secret"
 
-ERROR_LOG_TOKEN="A webhook token to send errors to a webhook"
-ERROR_LOG_CHANNEL="The channel to send errors to (must be the same as the webhook channel)"
+ERROR_WEBHOOK_URL="The URL of the webhook of the channel where you want the errors to be sent"
+ERROR_WEBHOOK_STAFF="The user who will be pinged when an error occurs"
 
 TOKEN="Your bot token"
 ```
