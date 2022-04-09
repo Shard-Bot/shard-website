@@ -126,7 +126,7 @@
 			"prefix": "Prefixes",
 			"prefixPlaceholder": "Los prefixes del bot (entre 1 y 6 caracters)",
 			"invalidPrefixLength": "El prefix debe tener entre 1 y 6 caracteres.",
-			"prefixLimit": "Solo puedes poner INSERT HERE prefixes.",
+			"prefixLimit": "Solo puedes poner 5 prefixes.",
 			"enterToAdd": "Presiona enter para agregar un prefix.",
 
 			"channels": {

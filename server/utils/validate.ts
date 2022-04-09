@@ -3,7 +3,10 @@ import serverConfigs from '../models/serverConfigs';
 const validateAndUpdate = (config: any) => {
 	if (!config) return new serverConfigs();
 
-	if (config.Prefix.length > 6) config.Prefix = 's!';
+	if (config.Prefixes.length > 5) config.Prefixes.slice(0, 5);
+	for (let prefix in config.Prefixes) {
+		if (prefix.length > 5) config.Prefixes.splice(prefix, 1);
+	}
 
 	if (config.Channels.JoinLog.length > 18) config.Channels.JoinLog = '';
 	if (config.Channels.ExitLog.length > 18) config.Channels.ExitLog = '';
