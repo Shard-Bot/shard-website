@@ -6,6 +6,7 @@ import styles from '../assets/styles/error.module.scss';
 
 import { GetServerSideProps } from 'next';
 import Navbar from '../components/navbar';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	if (!context.req.query.code)
@@ -34,6 +35,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 const Error = (props) => {
 	return (
 		<div className={styles['page']}>
+			<Head>
+				<title>Shard Bot</title>
+			</Head>
 			<Navbar user={props.user} lang={props.lang.navbar} />
 
 			<main>

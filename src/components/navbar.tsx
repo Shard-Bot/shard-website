@@ -36,6 +36,8 @@ const Navbar: any = (props: { user: any; lang: any }) => {
 							<Dropdown.Menu className={`container ${styles.dropdown}`} align='end'>
 								<Dropdown.Item href='/'>{props.lang.home}</Dropdown.Item>
 								<Dropdown.Item href='/dashboard'>{props.lang.servers}</Dropdown.Item>
+								<Dropdown.Item href='/invite'>{props.lang.invite}</Dropdown.Item>
+								<Dropdown.Item href='https://docs.shardbot.xyz/'>{props.lang.guide}</Dropdown.Item>
 								<Dropdown.Item href='https://docs.shardbot.xyz/informacion-general/terminos-de-servicio'>
 									{props.lang.tos}
 								</Dropdown.Item>
@@ -54,6 +56,7 @@ const Navbar: any = (props: { user: any; lang: any }) => {
 						<a href='/api/auth/loginRedirect'>{props.lang.login}</a>
 						<a href='https://discord.gg/2WEzY3KGYC'>{props.lang.support}</a>
 						<a href='/invite'>{props.lang.invite}</a>
+						<a href='https://docs.shardbot.xyz/'>{props.lang.guide}</a>
 					</div>
 				)}
 			</div>
