@@ -1,52 +1,48 @@
-.title {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0%);
-
-	.titleText {
-		h1 {
-			font-size: 100px;
-			text-align: center;
-		}
-
-		display: flex;
-		justify-content: center;
-		align-items: center;
+.main-page {
+	.particles {
+		position: sticky;
+		z-index: 0;
 	}
 
-	img {
-		width: 100%;
-	}
-}
+	main {
+		.title {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			margin-bottom: 1rem;
+			margin-top: 200px;
+			z-index: 20;
+			position: sticky;
 
-.showcase {
-	margin-top: 150px;
-	margin-bottom: 200px;
-
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, 0%);
-
-	.showcase-card {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: 100px;
-
-		img {
-			padding: 5px;
-			background-color: #21252b;
-			border-radius: 5px;
-			box-shadow: 0px 0px 10px #21252b;
-			transition: 0.3s;
-
+			.titleText {
+				margin-top: 100px;
+			}
 		}
 
-		h3,
-		p {
-			color: #fff;
+		.showcase {
+			width: 100%;
 			text-align: center;
+
+			.showcase-card {
+				margin-top: 60px;
+				display: flex;
+				align-items: center;
+
+				z-index: 20;
+				position: sticky;
+
+				img {
+					max-width: 700px;
+					z-index: 20;
+					position: sticky;
+					transition: 0.3s ease-in-out;
+
+					&:hover {
+						transform: scale(1.1);
+					}
+				}
+			}
 		}
 	}
 }
@@ -56,8 +52,11 @@
 	text-align: center;
 	margin-bottom: 50px;
 	background-color: #21252b;
-	padding: 10px; 
+	padding: 10px;
 	border-radius: 10px;
+
+	z-index: 20;
+	position: sticky;
 
 	a {
 		color: white;
@@ -69,10 +68,27 @@
 
 // For screens smaller than 740
 @media screen and (max-width: 740px) {
-	.title {
-		.titleText {
-			h1 {
-				font-size: 80px;
+	.main-page {
+		main {
+			.title {
+				text-align: center;
+				margin-top: 100px;
+
+				.titleText {
+					text-align: left;
+					margin-top: 0px;
+				}
+
+				img {
+					max-width: 90vw !important;
+				}
+			}
+
+			.showcase-card {
+				img {
+					max-width: 70vw !important;
+					min-width: 30vw !important;
+				}
 			}
 		}
 	}

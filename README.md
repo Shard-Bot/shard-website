@@ -1,5 +1,7 @@
 ## **Shard Bot Website**
 
+![Shard Logo](https://media.discordapp.net/attachments/942079456607105044/962363298827882536/logo.png "Shard Logo")
+
 <br>
 
 # Features:
@@ -39,10 +41,10 @@ Step 3: Create the .env file, copy the next lines and paste them into the file, 
 
 ```js
 PORT="Your port number"
-HOST="The Base URL of the Website, example: http://localhost:3000"
+HOST="The Base URL of the Website, example: http://localhost:3000/ (the / at the end is important)"
 MONGODB_URI="The URI of your MongoDB Database"
 
-SESSION_SECRET="Your secret key to encrypt the sessions, could be anything"
+SESSION_SECRET="A random string to encrypt the sessions"
 
 CLIENT_ID="Your Discord Client ID"
 CLIENT_SECRET="Your Discord Client Secret"
@@ -52,6 +54,8 @@ ERROR_LOG_CHANNEL="The channel to send errors to (must be the same as the webhoo
 
 TOKEN="Your bot token"
 ```
+
+You **Must** add the host to the authorized redirect urls on your Discord's application settings, example: http://localhost:300/api/auth/login
 
 <br>
 

@@ -29,94 +29,88 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 const Index: NextPage = (props: any) => {
 	return (
-		<div>
+		<div className={styles['main-page']}>
 			<Head>
 				<title>{props.lang.pageTitle}</title>
-				<meta name='description' content={props.lang.pageDescription} />
 			</Head>
-
-			<Particles
-				style={{
-					zIndex: '100000000000 !important',
-				}}
-				className={styles['particles']}
-				params={{
-					particles: {
-						number: {
-							value: 10,
-							density: {
-								enable: true,
-								value_area: 800,
-							},
-						},
-						color: {
-							value: '#21252b',
-						},
-						shape: {
-							type: 'polygon',
-							stroke: {
-								width: 0,
-								color: '#000',
-							},
-							polygon: {
-								nb_sides: 6,
-							},
-							image: {
-								width: 100,
-								height: 100,
-							},
-						},
-						opacity: {
-							value: 0.4,
-							random: true,
-							anim: {
-								enable: false,
-								speed: 1,
-								opacity_min: 0.1,
-								sync: false,
-							},
-						},
-						size: {
-							value: 160,
-							random: true,
-							anim: {
-								enable: true,
-								speed: 10,
-								size_min: 40,
-								sync: false,
-							},
-						},
-						line_linked: {
-							enable: false,
-							distance: 200,
-							color: '#ffffff',
-							opacity: 1,
-							width: 2,
-						},
-						move: {
-							enable: true,
-							speed: 1,
-							direction: 'none',
-							random: false,
-							straight: false,
-							out_mode: 'out',
-							bounce: false,
-							attract: {
-								enable: false,
-								rotateX: 600,
-								rotateY: 1200,
-							},
-						},
-					},
-					retina_detect: true,
-				}}
-			/>
+			<Navbar lang={props.lang.navbar} user={props.user} />
 
 			<main>
-				<Navbar lang={props.lang.navbar} user={props.user} />
-				<br />
+				<Particles
+					className={styles['particles']}
+					params={{
+						particles: {
+							number: {
+								value: 10,
+								density: {
+									enable: true,
+									value_area: 800,
+								},
+							},
+							color: {
+								value: '#21252b',
+							},
+							shape: {
+								type: 'polygon',
+								stroke: {
+									width: 0,
+									color: '#000',
+								},
+								polygon: {
+									nb_sides: 6,
+								},
+								image: {
+									width: 100,
+									height: 100,
+								},
+							},
+							opacity: {
+								value: 0.4,
+								random: true,
+								anim: {
+									enable: false,
+									speed: 1,
+									opacity_min: 0.1,
+									sync: false,
+								},
+							},
+							size: {
+								value: 160,
+								random: true,
+								anim: {
+									enable: true,
+									speed: 10,
+									size_min: 40,
+									sync: false,
+								},
+							},
+							line_linked: {
+								enable: false,
+								distance: 200,
+								color: '#ffffff',
+								opacity: 1,
+								width: 2,
+							},
+							move: {
+								enable: true,
+								speed: 1,
+								direction: 'none',
+								random: false,
+								straight: false,
+								out_mode: 'out',
+								bounce: false,
+								attract: {
+									enable: false,
+									rotateX: 600,
+									rotateY: 1200,
+								},
+							},
+						},
+						retina_detect: true,
+					}}
+				/>
 
-				<Container className={styles.title}>
+				<Container fluid className={styles.title}>
 					<Row sm={1} xs={1} md={2}>
 						<Col>
 							<motion.img
@@ -159,8 +153,15 @@ const Index: NextPage = (props: any) => {
 					</Row>
 				</Container>
 
-				<Container className={styles.showcase}>
-					<Row className={styles['showcase-card']}>
+				<br />
+				<br />
+
+				<Container fluid className={styles['showcase']}>
+					<Row sm={1} xs={1} md={2} className={styles['showcase-card']}>
+						<Col>
+							<h3>{props.lang.showcase.automodTitle}</h3>
+							<p>{props.lang.showcase.automodDescription}</p>
+						</Col>
 						<Col>
 							<img
 								src='https://media.discordapp.net/attachments/945041023262924870/945041325131194418/Peek_2022-02-19_17-29.gif'
@@ -168,12 +169,8 @@ const Index: NextPage = (props: any) => {
 								width={700}
 							/>
 						</Col>
-						<Col>
-							<h3>{props.lang.showcase.automodTitle}</h3>
-							<p>{props.lang.showcase.automodDescription}</p>
-						</Col>
 					</Row>
-					<Row className={styles['showcase-card']}>
+					<Row sm={1} xs={1} md={2} className={styles['showcase-card']}>
 						<Col>
 							<h3>{props.lang.showcase.moderationTitle}</h3>
 							<p>{props.lang.showcase.moderationDescription}</p>
@@ -186,7 +183,11 @@ const Index: NextPage = (props: any) => {
 							/>
 						</Col>
 					</Row>
-					<Row className={styles['showcase-card']}>
+					<Row sm={1} xs={1} md={2} className={styles['showcase-card']}>
+						<Col>
+							<h3>{props.lang.showcase.utilitiesTitle}</h3>
+							<p>{props.lang.showcase.utilitiesDescription}</p>
+						</Col>
 						<Col>
 							<img
 								src='https://media.discordapp.net/attachments/945041498037182525/945049213375508530/unknown.png'
@@ -194,12 +195,8 @@ const Index: NextPage = (props: any) => {
 								width={600}
 							/>
 						</Col>
-						<Col>
-							<h3>{props.lang.showcase.utilitiesTitle}</h3>
-							<p>{props.lang.showcase.utilitiesDescription}</p>
-						</Col>
 					</Row>
-					<Row className={styles['showcase-card']}>
+					<Row sm={1} xs={1} md={2} className={styles['showcase-card']}>
 						<Col>
 							<h3>{props.lang.showcase.loggingTitle}</h3>
 							<p>{props.lang.showcase.loggingDescription}</p>
@@ -213,7 +210,7 @@ const Index: NextPage = (props: any) => {
 						</Col>
 					</Row>
 
-					<Container fluid={true} className={styles['footer']}>
+					<Container fluid className={styles['footer']}>
 						<Row>
 							<Col>{props.lang.copyright}</Col>
 							<Col>

@@ -123,8 +123,11 @@
 			"select": "Select...",
 			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
 
-			"prefix": "Prefix",
-			"prefixPlaceholder": "Set the bot's prefix (between 1 and 6 characters)",
+			"prefix": "Prefixes",
+			"prefixPlaceholder": "Set the bot's prefixes (between 1 and 6 characters)",
+			"invalidPrefixLength": "Prefixes must be between 1 and 6 characters.",
+			"prefixLimit": "You can only have INERT HERE prefixes.",
+			"enterToAdd": "Press enter to add a prefix.",
 
 			"channels": {
 				"join": "Join Log Channels",
@@ -179,6 +182,7 @@
 
 			"status": "Status:",
 			"charLimit": "Character Limit:",
+			"select": "Select...",
 
 			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
 			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",
@@ -229,6 +233,7 @@
 			"status": "Status:",
 			"config": "Config:",
 			"enabled": "Enabled:",
+			"select": "Select...",
 
 			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
 			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",
@@ -340,6 +345,7 @@
 			"title": "Auto-Mod",
 
 			"status": "Status:",
+			"select": "Select...",
 
 			"note": "* Inputs have maximum and minimum values, if you don't follow the rules, the value will be reset to the default value.",
 			"permissionsNote": "* Some options may be disabled because you're not in the \"trusted users\" list.",

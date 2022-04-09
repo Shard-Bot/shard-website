@@ -7,8 +7,12 @@ const serverConfigs = new mongoose.Schema({
 		unique: true,
 	},
 	Prefix: {
-		type: String,
-		default: 's!',
+		type: Array,
+		default: 's.',
+	},
+	Prefixes: {
+		type: Array,
+		default: ['s.'],
 	},
 
 	Channels: {

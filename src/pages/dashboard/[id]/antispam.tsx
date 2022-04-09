@@ -652,7 +652,7 @@ const AntiSpam = (props: any) => {
 				<title>{props.lang.pageTitle}</title>
 			</Head>
 			<main>
-				<Container fluid={true} className={styles['title']}>
+				<Container fluid className={styles['title']}>
 					<img
 						className={styles['return-button']}
 						onClick={() => history.back()}

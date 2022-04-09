@@ -3,7 +3,7 @@
 	"private": true,
 	"main": "./server/index.ts",
 	"scripts": {
-		"dev": "nodemon ./server/index.ts --dev true --port 8080",
+		"dev": "nodemon ./server/index.ts --dev true",
 		"start": "npm-run-all -c start:*",
 		"start:cleanup": "rm -rf ./build",
 		"start:build-server": "cd ./server && tsc && cd ..",

@@ -19,7 +19,6 @@ export default function Document() {
 				<meta name="rating" content="general" />
 				<meta name="distribution" content="global" />
 				<meta name="revisit-after" content="1 days" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 				<meta name="apple-mobile-web-app-title" content="Title" />

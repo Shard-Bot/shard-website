@@ -156,7 +156,7 @@ const Lockdown = (props: any) => {
 			</Head>
 
 			<main>
-				<Container fluid={true} className={styles['title']}>
+				<Container fluid className={styles['title']}>
 					<img
 						className={styles['return-button']}
 						onClick={() => history.back()}
@@ -167,7 +167,7 @@ const Lockdown = (props: any) => {
 					<p>{props.lang.title}</p>
 				</Container>
 
-				<Container fluid={true}>
+				<Container fluid>
 					<Row sm={1} xs={1} md={2}>
 						<Col>
 							<h5>{props.lang.status}</h5>

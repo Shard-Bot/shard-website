@@ -10,6 +10,7 @@ import HelpTooltip from '../../../components/help-tooltip';
 import { Container, Col, Row } from 'react-bootstrap';
 import Head from 'next/head';
 import Select from 'react-select';
+import Creatable, { useCreatable } from 'react-select/creatable';
 import Particles from 'react-tsparticles';
 
 import styles from '../../../assets/styles/dashboard/general.module.scss';
@@ -337,32 +338,32 @@ const DashboardGeneral: NextPage = (props: any) => {
 					JoinLog: {
 						...selectOptions.channels.JoinLog,
 						default: {
-							value: channelResult.data.JoinLog.value,
-							label: `#${channelResult.data.JoinLog.label}`,
+							value: channelResult.data.JoinLog.value > 0 ? channelResult.data.JoinLog.value : '',
+							label: `${channelResult.data.JoinLog.label.length > 0 ? '#' : ''}${channelResult.data.JoinLog.label}`,
 						},
 						isLoading: false,
 					},
 					ExitLog: {
 						...selectOptions.channels.ExitLog,
 						default: {
-							value: channelResult.data.ExitLog.value,
-							label: `#${channelResult.data.ExitLog.label}`,
+							value: channelResult.data.ExitLog.value > 0 ? channelResult.data.ExitLog.value : '',
+							label: `${channelResult.data.ExitLog.label.length > 0 ? '#' : ''}${channelResult.data.ExitLog.label}`,
 						},
 						isLoading: false,
 					},
 					ModLog: {
 						...selectOptions.channels.ModLog,
 						default: {
-							value: channelResult.data.ModLog.value,
-							label: `#${channelResult.data.ModLog.label}`,
+							value: channelResult.data.ModLog.value > 0 ? channelResult.data.ModLog.value : '',
+							label: `${channelResult.data.ModLog.label.length > 0 ? '#' : ''}${channelResult.data.ModLog.label}`,
 						},
 						isLoading: false,
 					},
 					BotLog: {
 						...selectOptions.channels.BotLog,
 						default: {
-							value: channelResult.data.BotLog.value,
-							label: `#${channelResult.data.BotLog.label}`,
+							value: channelResult.data.BotLog.value > 0 ? channelResult.data.BotLog.value : '',
+							label: `${channelResult.data.BotLog.label.length > 0 ? '#' : ''}${channelResult.data.BotLog.label}`,
 						},
 						isLoading: false,
 					},
@@ -399,7 +400,7 @@ const DashboardGeneral: NextPage = (props: any) => {
 			<Navbar user={props.user} lang={props.lang.navbar} />
 
 			<main>
-				<Container fluid={true} className={styles['title']}>
+				<Container fluid className={styles['title']}>
 					<img
 						className={styles['return-button']}
 						onClick={() => history.back()}
@@ -410,22 +411,55 @@ const DashboardGeneral: NextPage = (props: any) => {
 					<p>{props.lang.title}</p>
 				</Container>
 
-				<Container fluid={true}>
+				<Container fluid>
 					<Row sm={1} xs={1} md={2}>
 						<Col>
 							<h2>
 								{props.lang.prefix} <HelpTooltip body={props.lang.tooltips.prefix} />
 							</h2>
-							<input
-								defaultValue={props.server.config.Prefix}
-								type='text'
-								onChange={(e) => {
-									setConfig({
-										...config,
-										Prefix: e.target.value,
+
+							<Creatable
+								isMulti
+								styles={selectStyles}
+								placeholder={props.lang.prefixPlaceholder}
+								defaultValue={() => {
+									if (config.Prefixes.length == 0) return [];
+
+									return config.Prefixes.map((prefix) => {
+										return {
+											value: prefix,
+											label: prefix,
+										};
 									});
 								}}
+								onChange={(value: any) => {
+									if (value.length == 0) return;
+
+									if (value[value.length - 1].value.length == 0 || value[value.length - 1].value.length > 6) {
+										value.pop();
+										return alert(props.lang.invalidPrefixLength);
+									}
+
+									let newPrefixes = value.map((prefix: any) => prefix.value);
+									if (newPrefixes.length > 5) {
+										newPrefixes.slice(0, 5);
+										alert(props.lang.prefixLimit);
+									}
+
+									setConfig({
+										...config,
+										Prefixes: newPrefixes,
+									});
+								}}
+								components={{
+									NoOptionsMessage: () => null,
+									ClearIndicator: () => null,
+									MenuList: () => null,
+									DropdownIndicator: () => null,
+									IndicatorSeparator: () => null,
+								}}
 							/>
+							{props.lang.enterToAdd}
 
 							<br />
 							<br />
